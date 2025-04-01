@@ -13,8 +13,8 @@ class WorkItem {
 // 載入作品資料
 async function loadWorks() {
     try {
-        // 使用相對路徑
-        const response = await fetch('../data/works.json');
+        // 使用絕對路徑
+        const response = await fetch('/student-portfolio/data/works.json');
         const data = await response.json();
         console.log('Loaded data:', data); // 添加除錯訊息
         return data.works.map(work => new WorkItem(work));
