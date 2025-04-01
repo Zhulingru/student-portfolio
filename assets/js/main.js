@@ -13,8 +13,14 @@ class WorkItem {
 // 載入作品資料
 async function loadWorks() {
     try {
-        // 使用絕對路徑
-        const response = await fetch('/student-portfolio/data/works.json');
+        // 獲取當前頁面的基礎路徑
+        const basePath = window.location.pathname.includes('student-portfolio') ? '/student-portfolio' : '';
+        const response = await fetch(`${basePath}/data/works.json`);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         const data = await response.json();
         console.log('Loaded data:', data); // 添加除錯訊息
         return data.works.map(work => new WorkItem(work));
@@ -54,6 +60,11 @@ async function displayWorks() {
             return;
         }
         
+        if (!works || works.length === 0) {
+            gallery.innerHTML = '<div class="col-12"><p class="text-center">無法載入作品資料</p></div>';
+            return;
+        }
+        
         // 清空現有內容
         gallery.innerHTML = '';
         
@@ -86,6 +97,10 @@ async function displayWorks() {
         console.log('Display completed!'); // 添加除錯訊息
     } catch (error) {
         console.error('Error in displayWorks:', error); // 添加除錯訊息
+        const gallery = document.querySelector('.gallery');
+        if (gallery) {
+            gallery.innerHTML = '<div class="col-12"><p class="text-center">載入作品時發生錯誤</p></div>';
+        }
     }
 }
 
