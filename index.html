@@ -74,43 +74,34 @@
     <script src="assets/js/background/sketch.js"></script>
     
     <script>
-        // 初始化背景音樂
-        let bgmController;
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM Content Loaded, initializing audio...');
-            bgmController = new BGMController();
+        document.addEventListener('DOMContentLoaded', function() {
+            const bgmController = new BGMController();
             
-            // 等待用戶第一次互動後開始播放
-            const startMusic = async (event) => {
-                console.log('User interaction detected:', event.type);
+            // 在頁面加載完成後自動嘗試播放
+            const startAudio = async () => {
                 try {
                     await bgmController.start();
-                    // 移除所有事件監聽器
-                    ['click', 'keydown', 'touchstart'].forEach(event => {
-                        document.removeEventListener(event, startMusic);
-                    });
-                    console.log('Music started successfully');
                 } catch (error) {
-                    console.error('Failed to start music:', error);
+                    console.error('Failed to start audio:', error);
                 }
             };
-            
-            // 添加多個事件監聽器
-            ['click', 'keydown', 'touchstart'].forEach(event => {
-                document.addEventListener(event, startMusic);
-            });
-            
-            // 添加測試按鈕（臨時）
-            const testButton = document.createElement('button');
-            testButton.textContent = '測試音樂';
-            testButton.style.position = 'fixed';
-            testButton.style.bottom = '20px';
-            testButton.style.right = '20px';
-            testButton.style.zIndex = '1000';
-            testButton.onclick = startMusic;
-            document.body.appendChild(testButton);
-            
-            console.log('Audio initialization complete, waiting for user interaction');
+
+            // 監聽任何用戶交互
+            const handleInteraction = async () => {
+                await startAudio();
+                // 移除所有事件監聽器，因為我們只需要觸發一次
+                document.removeEventListener('click', handleInteraction);
+                document.removeEventListener('touchstart', handleInteraction);
+                document.removeEventListener('keydown', handleInteraction);
+            };
+
+            // 添加多個事件監聽器以捕獲第一次用戶交互
+            document.addEventListener('click', handleInteraction);
+            document.addEventListener('touchstart', handleInteraction);
+            document.addEventListener('keydown', handleInteraction);
+
+            // 立即嘗試播放
+            startAudio();
         });
     </script>
 </body>
