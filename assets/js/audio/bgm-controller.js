@@ -6,9 +6,10 @@ class BGMController {
         const isGitHubPages = window.location.hostname.includes('github.io');
         const basePath = isGitHubPages ? 'https://zhulingru.github.io/student-portfolio' : '';
         
-        // 使用不帶空格的文件名
-        const audioPath1 = `${basePath}/assets/audio/background_music1.mp3`;
-        const audioPath2 = `${basePath}/assets/audio/background_music2.mp3`;
+        // 使用不帶空格的文件名，並添加時間戳防止快取
+        const timestamp = new Date().getTime();
+        const audioPath1 = `${basePath}/assets/audio/background_music1.mp3?t=${timestamp}`;
+        const audioPath2 = `${basePath}/assets/audio/background_music2.mp3?t=${timestamp}`;
         
         console.log('Current hostname:', window.location.hostname);
         console.log('Is GitHub Pages:', isGitHubPages);
@@ -24,7 +25,7 @@ class BGMController {
             audio.preload = 'auto';
             audio.loop = false;
             audio.volume = 0;
-            audio.muted = true; // 初始設置為靜音
+            audio.muted = false; // 不要初始靜音
         });
         
         // 設置音源
@@ -41,8 +42,8 @@ class BGMController {
         // 設置事件監聽器
         this.setupEventListeners();
         
-        // 嘗試自動播放
-        this.tryAutoplay();
+        // 在所有可能的用戶交互事件上嘗試播放
+        this.setupPlayTriggers();
     }
 
     setupEventListeners() {
@@ -77,25 +78,42 @@ class BGMController {
         this.music2.addEventListener('ended', () => this.handleTrackEnd());
     }
 
-    async tryAutoplay() {
-        try {
-            // 先靜音播放
-            this.music1.muted = true;
-            this.music1.volume = 0;
-            await this.music1.play();
+    setupPlayTriggers() {
+        const startPlayback = async () => {
+            if (this.hasInteracted) return;
+            this.hasInteracted = true;
             
-            // 如果播放成功，逐漸取消靜音並增加音量
-            setTimeout(() => {
-                if (this.music1.paused) return;
-                this.music1.muted = false;
-                this.fadeInVolume(this.music1);
+            try {
+                // 先設置較低的音量
+                this.music1.volume = 0.1;
+                await this.music1.play();
                 this.currentTrack = this.music1;
                 this.isPlaying = true;
-            }, 1000);
-            
-        } catch (error) {
-            console.log('Autoplay failed, waiting for user interaction:', error);
-            this.setupAutoplayFallback();
+                
+                // 逐漸增加音量
+                this.fadeInVolume(this.music1);
+                
+                // 移除所有事件監聽器
+                ['click', 'touchstart', 'keydown', 'scroll', 'mousemove'].forEach(event => {
+                    document.removeEventListener(event, startPlayback);
+                });
+                
+                console.log('Music started successfully');
+            } catch (error) {
+                console.error('Failed to start playback:', error);
+            }
+        };
+
+        // 添加所有可能的交互事件監聽器
+        ['click', 'touchstart', 'keydown', 'scroll', 'mousemove'].forEach(event => {
+            document.addEventListener(event, startPlayback, { once: true });
+        });
+
+        // 也在 DOMContentLoaded 時嘗試播放
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', startPlayback, { once: true });
+        } else {
+            startPlayback();
         }
     }
 
@@ -111,34 +129,6 @@ class BGMController {
                 clearInterval(fadeInterval);
             }
         }, 200);
-    }
-
-    setupAutoplayFallback() {
-        const startAudio = async () => {
-            if (this.hasInteracted) return;
-            this.hasInteracted = true;
-            
-            try {
-                this.music1.muted = false;
-                this.music1.volume = 0;
-                await this.music1.play();
-                this.fadeInVolume(this.music1);
-                this.currentTrack = this.music1;
-                this.isPlaying = true;
-                
-                // 移除所有事件監聽器
-                ['click', 'touchstart', 'keydown', 'scroll'].forEach(event => {
-                    document.removeEventListener(event, startAudio);
-                });
-            } catch (error) {
-                console.error('Playback failed after interaction:', error);
-            }
-        };
-
-        // 添加更多的事件監聽器
-        ['click', 'touchstart', 'keydown', 'scroll'].forEach(event => {
-            document.addEventListener(event, startAudio, { once: true });
-        });
     }
 
     async handleTrackEnd() {
