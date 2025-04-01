@@ -21,7 +21,7 @@ async function loadWorks() {
             throw new Error('Failed to load works data');
         }
         const data = await response.json();
-        return data;
+        return data.works.map(work => new WorkItem(work));
     } catch (error) {
         console.error('Error loading works:', error);
         return [];
@@ -67,15 +67,13 @@ function createCategorySection(category, works) {
 // 顯示作品
 async function displayWorks() {
     const gallery = document.querySelector('.gallery');
-    if (!gallery) {
-        return;
-    }
+    if (!gallery) return;
 
     try {
         const works = await loadWorks();
         
         if (!works || works.length === 0) {
-            gallery.innerHTML = '<div class="text-center">目前沒有作品</div>';
+            gallery.innerHTML = '<div class="text-center">載入中...</div>';
             return;
         }
         
@@ -93,9 +91,9 @@ async function displayWorks() {
         gridContainer.className = 'category-grid';
         
         // 添加每個分類區塊
-        Object.entries(categorizedWorks).forEach(([category, works]) => {
-            if (works.length > 0) {
-                const categorySection = createCategorySection(category, works);
+        Object.entries(categorizedWorks).forEach(([category, categoryWorks]) => {
+            if (categoryWorks.length > 0) {
+                const categorySection = createCategorySection(category, categoryWorks);
                 gridContainer.appendChild(categorySection);
             }
         });
@@ -114,14 +112,15 @@ async function displayWorks() {
             }
         }
     } catch (error) {
-        gallery.innerHTML = `
-            <div class="alert alert-danger" role="alert">
-                <h4 class="alert-heading">載入失敗</h4>
-                <p>${error.message || '載入作品時發生錯誤'}</p>
-                <hr>
-                <p class="mb-0">請稍後再試，或聯繫管理員</p>
-            </div>
-        `;
+        console.error('Display error:', error);
+        // 在手機版上不顯示錯誤信息，而是顯示一個簡單的重試按鈕
+        const isMobile = window.innerWidth <= 768;
+        gallery.innerHTML = isMobile 
+            ? '<div class="text-center"><button onclick="location.reload()" class="btn btn-primary">重新整理</button></div>'
+            : `<div class="alert alert-danger" role="alert">
+                <p>載入失敗，請稍後再試</p>
+                <button onclick="location.reload()" class="btn btn-primary">重新整理</button>
+              </div>`;
     }
 }
 
