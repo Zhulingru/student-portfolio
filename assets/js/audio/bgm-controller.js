@@ -1,11 +1,16 @@
 class BGMController {
     constructor() {
         console.log('Initializing BGMController...');
+        
         // 修正路徑處理邏輯
-        const basePath = window.location.hostname.includes('github.io') ? '/student-portfolio' : '';
+        const isGitHubPages = window.location.hostname.includes('github.io');
+        const basePath = isGitHubPages ? 'https://zhulingru.github.io/student-portfolio' : '';
         const audioPath1 = `${basePath}/assets/audio/background music1.mp3`;
         const audioPath2 = `${basePath}/assets/audio/background music2.mp3`;
         
+        console.log('Current hostname:', window.location.hostname);
+        console.log('Is GitHub Pages:', isGitHubPages);
+        console.log('Base path:', basePath);
         console.log('Loading audio from:', audioPath1, audioPath2);
         
         this.music1 = new Audio(audioPath1);
@@ -93,6 +98,14 @@ class BGMController {
         track.volume = 1;
         
         try {
+            // 先加載音頻
+            await new Promise((resolve, reject) => {
+                track.addEventListener('canplaythrough', resolve, { once: true });
+                track.addEventListener('error', reject, { once: true });
+                track.load();
+            });
+            
+            // 然後播放
             const playPromise = track.play();
             if (playPromise !== undefined) {
                 await playPromise;
@@ -100,13 +113,13 @@ class BGMController {
             }
         } catch (error) {
             console.error('Error playing track:', error);
-            // 如果自動播放被阻止，嘗試靜音播放
             if (error.name === 'NotAllowedError') {
                 console.log('Attempting to play muted...');
                 track.muted = true;
                 await track.play();
-                // 漸漸取消靜音
                 this.fadeInVolume(track);
+            } else {
+                console.error('Playback failed:', error.message);
             }
         }
     }
