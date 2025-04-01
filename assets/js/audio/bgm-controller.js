@@ -4,12 +4,11 @@ class BGMController {
         
         // 修正路徑處理邏輯
         const isGitHubPages = window.location.hostname.includes('github.io');
-        // 修正：移除多餘的 /assets 前綴
         const basePath = isGitHubPages ? 'https://zhulingru.github.io/student-portfolio' : '';
         
-        // 使用 encodeURIComponent 處理檔案名稱中的空格
-        const audioPath1 = `${basePath}/assets/audio/${encodeURIComponent('background music1.mp3')}`;
-        const audioPath2 = `${basePath}/assets/audio/${encodeURIComponent('background music2.mp3')}`;
+        // 使用不帶空格的文件名
+        const audioPath1 = `${basePath}/assets/audio/background_music1.mp3`;
+        const audioPath2 = `${basePath}/assets/audio/background_music2.mp3`;
         
         console.log('Current hostname:', window.location.hostname);
         console.log('Is GitHub Pages:', isGitHubPages);
