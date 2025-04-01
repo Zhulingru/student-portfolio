@@ -70,74 +70,44 @@ main.container {
 
 /* 分類網格布局 */
 .gallery {
-    padding: 2rem;
-}
-
-.category-grid {
     display: grid;
-    gap: 3rem;
-    width: 100%;
-}
-
-.category-section {
-    margin-bottom: 3rem;
-}
-
-.category-title {
-    margin-bottom: 2rem;
-    color: #333;
-    font-size: 1.8rem;
-}
-
-.category-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2.5rem;
-    padding: 0.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 2rem 0;
 }
 
 .card {
     background: white;
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 1.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease;
     height: 100%;
     display: flex;
     flex-direction: column;
-    margin-bottom: 1rem;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .card-body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 1rem 0;
-}
-
-.card-title {
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
-    color: #2c3e50;
 }
 
 .card-text {
     flex: 1;
-    min-height: 4.5rem;
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
-    color: #555;
+    min-height: 4.5rem; /* 確保三行文字的空間 */
+    margin-bottom: 1rem;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
 
 .card-footer {
     margin-top: auto;
-    padding: 1rem 0 0;
-    border-top: 1px solid #eee;
+    background: none;
+    border-top: none;
+    padding: 0.5rem 0 0;
 }
 
 .author-date {
@@ -151,59 +121,52 @@ main.container {
 
 .btn-primary {
     width: 100%;
-    padding: 0.8rem;
-    border-radius: 6px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    transition: background-color 0.3s ease;
+    padding: 0.5rem;
+    border-radius: 5px;
 }
 
-.btn-primary:hover {
-    background-color: #0056b3;
+/* 分類網格布局 */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem;
 }
 
-/* 響應式設計 */
-@media (max-width: 768px) {
-    .gallery {
-        padding: 1rem;
-    }
-
-    .category-content {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-
-    .card {
-        margin-bottom: 0.5rem;
-    }
-
-    .category-title {
-        font-size: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
-}
-
-/* 修復手機版顯示問題 */
-.alert {
-    background-color: #fff;
-    border-radius: 8px;
+.category-section {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     padding: 1.5rem;
-    margin: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+    aspect-ratio: 1;
 }
 
-.alert-danger {
-    border-left: 4px solid #dc3545;
+.category-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-.alert-heading {
-    color: #dc3545;
-    margin-bottom: 1rem;
+.category-title {
+    color: #2c3e50;
+    margin: 0 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e9ecef;
+    font-size: 1.25rem;
+    text-align: center;
 }
 
-.mb-0 {
-    margin-bottom: 0;
+.category-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 /* 作品卡片樣式 */
