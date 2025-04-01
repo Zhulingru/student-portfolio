@@ -7,6 +7,8 @@ class WorkItem {
         this.category = data.category;
         this.image = data.image;
         this.link = data.link;
+        this.student = data.student;
+        this.date = data.date;
     }
 }
 
@@ -22,7 +24,7 @@ async function loadWorks() {
         }
         
         const data = await response.json();
-        console.log('Loaded data:', data); // 添加除錯訊息
+        console.log('Loaded data:', data);
         return data.works.map(work => new WorkItem(work));
     } catch (error) {
         console.error('Error loading works:', error);
@@ -32,15 +34,23 @@ async function loadWorks() {
 
 // 建立作品卡片
 function createWorkCard(work) {
+    const imageHtml = work.image 
+        ? `<img src="${work.image}" alt="${work.title}" class="card-img-top">` 
+        : '<div class="card-img-placeholder"></div>';
+
     return `
-        <div class="col-md-4 col-sm-6">
+        <div class="col-md-4 col-sm-6 mb-4">
             <div class="work-card">
-                <img src="${work.image}" alt="${work.title}">
+                ${imageHtml}
                 <div class="card-body">
                     <span class="category">${work.category}</span>
                     <h5 class="card-title">${work.title}</h5>
                     <p class="card-text">${work.desc}</p>
-                    ${work.link ? `<a href="${work.link}" class="btn-view" target="_blank">查看作品</a>` : ''}
+                    <div class="card-meta">
+                        <small class="text-muted">作者：${work.student}</small>
+                        <small class="text-muted">日期：${work.date}</small>
+                    </div>
+                    ${work.link ? `<a href="${work.link}" class="btn-view mt-2" target="_blank">查看作品</a>` : ''}
                 </div>
             </div>
         </div>
@@ -50,13 +60,13 @@ function createWorkCard(work) {
 // 顯示作品
 async function displayWorks() {
     try {
-        console.log('Starting to display works...'); // 添加除錯訊息
+        console.log('Starting to display works...');
         const works = await loadWorks();
-        console.log('Loaded works:', works); // 添加除錯訊息
+        console.log('Loaded works:', works);
         
         const gallery = document.querySelector('.gallery');
         if (!gallery) {
-            console.error('Gallery element not found!'); // 添加除錯訊息
+            console.error('Gallery element not found!');
             return;
         }
         
@@ -94,9 +104,9 @@ async function displayWorks() {
             }
         });
         
-        console.log('Display completed!'); // 添加除錯訊息
+        console.log('Display completed!');
     } catch (error) {
-        console.error('Error in displayWorks:', error); // 添加除錯訊息
+        console.error('Error in displayWorks:', error);
         const gallery = document.querySelector('.gallery');
         if (gallery) {
             gallery.innerHTML = '<div class="col-12"><p class="text-center">載入作品時發生錯誤</p></div>';
@@ -106,6 +116,6 @@ async function displayWorks() {
 
 // 當頁面載入完成時執行
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM Content Loaded'); // 添加除錯訊息
+    console.log('DOM Content Loaded');
     displayWorks();
 }); 

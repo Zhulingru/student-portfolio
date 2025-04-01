@@ -1,28 +1,34 @@
 {
     "works": [
         {
-            "id": 1,
+            "id": "1",
             "title": "Scratch 動畫作品",
             "desc": "這是一個使用 Scratch 製作的動畫作品，展示了基本的動畫製作技巧。",
             "category": "Scratch動畫",
-            "image": "https://picsum.photos/300/200?random=1",
-            "link": "https://scratch.mit.edu/projects/example"
+            "image": "",
+            "link": "https://scratch.mit.edu/projects/example",
+            "student": "王小明",
+            "date": "2024-04-01"
         },
         {
-            "id": 2,
+            "id": "2",
             "title": "Scratch 遊戲作品",
             "desc": "這是一個簡單的射擊遊戲，使用 Scratch 的遊戲製作功能完成。",
             "category": "Scratch遊戲",
-            "image": "https://picsum.photos/300/200?random=2",
-            "link": "https://scratch.mit.edu/projects/example"
+            "image": "",
+            "link": "https://scratch.mit.edu/projects/example",
+            "student": "李小華",
+            "date": "2024-04-01"
         },
         {
-            "id": 3,
+            "id": "3",
             "title": "CodeSpark 遊戲",
             "desc": "使用 CodeSpark 平台製作的互動遊戲，展示了程式設計的基本概念。",
             "category": "CodeSpark遊戲",
-            "image": "https://picsum.photos/300/200?random=3",
-            "link": null
+            "image": "",
+            "link": "",
+            "student": "張小美",
+            "date": "2024-04-01"
         }
     ]
 } 
