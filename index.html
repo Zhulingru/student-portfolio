@@ -76,20 +76,30 @@
     <script>
         // 初始化背景音樂
         document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM Content Loaded, initializing audio...');
             const bgmController = new BGMController();
             
             // 等待用戶第一次互動後開始播放
-            const startMusic = () => {
-                bgmController.start();
-                document.removeEventListener('click', startMusic);
-                document.removeEventListener('keydown', startMusic);
-                document.removeEventListener('touchstart', startMusic);
+            const startMusic = async () => {
+                console.log('User interaction detected, starting music...');
+                try {
+                    await bgmController.start();
+                    // 移除所有事件監聽器
+                    ['click', 'keydown', 'touchstart'].forEach(event => {
+                        document.removeEventListener(event, startMusic);
+                    });
+                    console.log('Music started successfully');
+                } catch (error) {
+                    console.error('Failed to start music:', error);
+                }
             };
             
-            // 添加事件監聽器
-            document.addEventListener('click', startMusic);
-            document.addEventListener('keydown', startMusic);
-            document.addEventListener('touchstart', startMusic);
+            // 添加多個事件監聽器
+            ['click', 'keydown', 'touchstart'].forEach(event => {
+                document.addEventListener(event, startMusic);
+            });
+            
+            console.log('Audio initialization complete, waiting for user interaction');
         });
     </script>
 </body>
