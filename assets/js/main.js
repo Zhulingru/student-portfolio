@@ -14,15 +14,14 @@ class WorkItem {
 // 加載作品數據
 async function loadWorks() {
     try {
-        // 獲取當前頁面的基礎路徑
-        const basePath = window.location.hostname.includes('github.io') ? '/student-portfolio' : '';
-        const response = await fetch(`${basePath}/data/works.json`);
-        
+        // 添加時間戳參數來防止快取
+        const timestamp = new Date().getTime();
+        const response = await fetch(`data/works.json?t=${timestamp}`);
         if (!response.ok) {
             throw new Error('Failed to load works data');
         }
         const data = await response.json();
-        return data.works; // 返回 works 數組
+        return data;
     } catch (error) {
         console.error('Error loading works:', error);
         return [];
@@ -41,68 +40,90 @@ function renderWorkCard(work) {
                         <span>作者：${work.student}</span>
                         <span>日期：${work.date}</span>
                     </div>
-                    <a href="${work.link || '#'}" class="btn btn-primary" ${work.link ? 'target="_blank"' : ''}>查看作品</a>
+                    <a href="${work.link}" class="btn btn-primary">查看作品</a>
                 </div>
             </div>
         </div>
     `;
 }
 
-// 按類別分組作品
-function groupWorksByCategory(works) {
-    const categorizedWorks = {};
-    works.forEach(work => {
-        if (!categorizedWorks[work.category]) {
-            categorizedWorks[work.category] = [];
-        }
-        categorizedWorks[work.category].push(work);
-    });
-    return categorizedWorks;
-}
-
-// 渲染分類區塊
-function renderCategorySection(category, works) {
-    const categoryId = category.toLowerCase().replace(/\s+/g, '-');
-    return `
-        <div class="category-section" id="${categoryId}">
-            <h2 class="category-title">${category}</h2>
-            <div class="category-content">
-                ${works.map(work => renderWorkCard(work)).join('')}
-            </div>
+// 建立分類區塊
+function createCategorySection(category, works) {
+    const sectionId = category.toLowerCase().replace(/\s+/g, '-');
+    const categorySection = document.createElement('div');
+    categorySection.className = 'category-section';
+    categorySection.id = sectionId;
+    
+    categorySection.innerHTML = `
+        <h2 class="category-title">${category}</h2>
+        <div class="category-content">
+            ${works.map(work => renderWorkCard(work)).join('')}
         </div>
     `;
+    
+    return categorySection;
 }
 
-// 初始化頁面
-async function initializePage() {
+// 顯示作品
+async function displayWorks() {
+    const gallery = document.querySelector('.gallery');
+    if (!gallery) {
+        return;
+    }
+
     try {
         const works = await loadWorks();
-        if (!Array.isArray(works)) {
-            throw new Error('Works data is not an array');
+        
+        if (!works || works.length === 0) {
+            gallery.innerHTML = '<div class="text-center">目前沒有作品</div>';
+            return;
         }
         
-        const gallery = document.querySelector('.gallery');
-        if (!gallery) {
-            throw new Error('Gallery element not found');
-        }
+        // 按分類組織作品
+        const categorizedWorks = {};
+        works.forEach(work => {
+            if (!categorizedWorks[work.category]) {
+                categorizedWorks[work.category] = [];
+            }
+            categorizedWorks[work.category].push(work);
+        });
         
-        const categorizedWorks = groupWorksByCategory(works);
-        const categorySections = Object.entries(categorizedWorks)
-            .map(([category, works]) => renderCategorySection(category, works))
-            .join('');
-            
-        gallery.innerHTML = categorySections;
+        // 創建網格容器
+        const gridContainer = document.createElement('div');
+        gridContainer.className = 'category-grid';
+        
+        // 添加每個分類區塊
+        Object.entries(categorizedWorks).forEach(([category, works]) => {
+            if (works.length > 0) {
+                const categorySection = createCategorySection(category, works);
+                gridContainer.appendChild(categorySection);
+            }
+        });
+        
+        // 更新頁面
+        gallery.innerHTML = '';
+        gallery.appendChild(gridContainer);
+        
+        // 處理錨點導航
+        if (window.location.hash) {
+            const targetElement = document.querySelector(window.location.hash);
+            if (targetElement) {
+                requestAnimationFrame(() => {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                });
+            }
+        }
     } catch (error) {
-        console.error('Error initializing page:', error);
-        const gallery = document.querySelector('.gallery');
-        if (gallery) {
-            gallery.innerHTML = '<div class="alert alert-danger">載入失敗，請稍後再試</div>';
-        }
+        gallery.innerHTML = `
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">載入失敗</h4>
+                <p>${error.message || '載入作品時發生錯誤'}</p>
+                <hr>
+                <p class="mb-0">請稍後再試，或聯繫管理員</p>
+            </div>
+        `;
     }
 }
-
-// 當 DOM 加載完成後初始化頁面
-document.addEventListener('DOMContentLoaded', initializePage);
 
 // 處理導航點擊
 document.addEventListener('click', (e) => {
@@ -115,4 +136,9 @@ document.addEventListener('click', (e) => {
             history.pushState(null, '', targetId);
         }
     }
+});
+
+// 當頁面載入完成時執行
+document.addEventListener('DOMContentLoaded', () => {
+    displayWorks();
 }); 
