@@ -1,10 +1,15 @@
 class BGMController {
     constructor() {
         console.log('Initializing BGMController...');
-        // 使用完整的相對路徑
-        const basePath = window.location.pathname.includes('github.io') ? '/student-portfolio' : '';
-        this.music1 = new Audio(`${basePath}/assets/audio/background music1.mp3`);
-        this.music2 = new Audio(`${basePath}/assets/audio/background music2.mp3`);
+        // 修正路徑處理邏輯
+        const basePath = window.location.hostname.includes('github.io') ? '/student-portfolio' : '';
+        const audioPath1 = `${basePath}/assets/audio/background music1.mp3`;
+        const audioPath2 = `${basePath}/assets/audio/background music2.mp3`;
+        
+        console.log('Loading audio from:', audioPath1, audioPath2);
+        
+        this.music1 = new Audio(audioPath1);
+        this.music2 = new Audio(audioPath2);
         
         this.currentTrack = null;
         this.fadeOutDuration = 3000;
@@ -16,21 +21,34 @@ class BGMController {
             console.error('Error loading music1:', e);
             console.error('Music1 error details:', this.music1.error);
             console.log('Music1 source:', this.music1.src);
+            console.log('Music1 ready state:', this.music1.readyState);
         });
 
         this.music2.addEventListener('error', (e) => {
             console.error('Error loading music2:', e);
             console.error('Music2 error details:', this.music2.error);
             console.log('Music2 source:', this.music2.src);
+            console.log('Music2 ready state:', this.music2.readyState);
         });
 
         // 添加加載成功的回調
         this.music1.addEventListener('loadeddata', () => {
             console.log('Music1 loaded successfully');
+            console.log('Music1 duration:', this.music1.duration);
         });
 
         this.music2.addEventListener('loadeddata', () => {
             console.log('Music2 loaded successfully');
+            console.log('Music2 duration:', this.music2.duration);
+        });
+
+        // 添加可以播放的回調
+        this.music1.addEventListener('canplay', () => {
+            console.log('Music1 can play');
+        });
+
+        this.music2.addEventListener('canplay', () => {
+            console.log('Music2 can play');
         });
 
         // 設置循環播放
