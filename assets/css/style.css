@@ -34,18 +34,23 @@ body {
 main.container {
     flex: 1;
     padding: 1rem;
+    max-width: 1400px;
 }
 
 /* 分類網格布局 */
 .gallery {
     width: 100%;
+    min-height: calc(100vh - 100px);
+    display: flex;
+    align-items: flex-start;
 }
 
 .category-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
     width: 100%;
+    margin: 0 auto;
 }
 
 .category-section {
@@ -54,8 +59,10 @@ main.container {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     padding: 1.5rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    min-height: 300px;
 }
 
 .category-section:hover {
@@ -74,6 +81,8 @@ main.container {
 
 .category-content {
     flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 /* 作品卡片樣式 */
@@ -83,6 +92,9 @@ main.container {
     border-radius: 8px;
     margin-bottom: 1rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .work-card:last-child {
@@ -96,6 +108,9 @@ main.container {
 
 .work-card .card-body {
     padding: 1.25rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .work-card .card-title {
@@ -112,14 +127,16 @@ main.container {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    flex: 1;
 }
 
 .work-card .card-meta {
-    margin: 1rem 0;
+    margin-top: auto;
     display: flex;
     justify-content: space-between;
     font-size: 0.85rem;
     color: #6c757d;
+    padding-top: 1rem;
 }
 
 .work-card .btn-view {
@@ -132,6 +149,7 @@ main.container {
     transition: background-color 0.3s ease;
     width: 100%;
     text-align: center;
+    margin-top: 1rem;
 }
 
 .work-card .btn-view:hover {
@@ -140,10 +158,10 @@ main.container {
 }
 
 /* 響應式調整 */
-@media (max-width: 992px) {
+@media (max-width: 1200px) {
     .category-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
+        gap: 1.5rem;
     }
 }
 
@@ -164,5 +182,9 @@ main.container {
     
     main.container {
         padding: 0.5rem;
+    }
+    
+    .category-section {
+        min-height: auto;
     }
 } 

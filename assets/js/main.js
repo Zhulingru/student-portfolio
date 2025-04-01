@@ -57,7 +57,7 @@ function createWorkCard(work) {
                     <small>作者：${work.student}</small>
                     <small>日期：${work.date}</small>
                 </div>
-                ${work.link ? `<a href="${work.link}" class="btn-view mt-2" target="_blank">查看作品</a>` : ''}
+                ${work.link ? `<a href="${work.link}" class="btn-view" target="_blank">查看作品</a>` : ''}
             </div>
         </div>
     `;
@@ -66,14 +66,18 @@ function createWorkCard(work) {
 // 建立分類區塊
 function createCategorySection(category, works) {
     const sectionId = category.toLowerCase().replace(/\s+/g, '-');
-    return `
-        <div class="category-section" id="${sectionId}">
-            <h2 class="category-title">${category}</h2>
-            <div class="category-content">
-                ${works.map(work => createWorkCard(work)).join('')}
-            </div>
+    const categorySection = document.createElement('div');
+    categorySection.className = 'category-section';
+    categorySection.id = sectionId;
+    
+    categorySection.innerHTML = `
+        <h2 class="category-title">${category}</h2>
+        <div class="category-content">
+            ${works.map(work => createWorkCard(work)).join('')}
         </div>
     `;
+    
+    return categorySection;
 }
 
 // 顯示作品
@@ -107,7 +111,8 @@ async function displayWorks() {
         // 添加每個分類區塊
         Object.entries(categorizedWorks).forEach(([category, works]) => {
             if (works.length > 0) {
-                gridContainer.innerHTML += createCategorySection(category, works);
+                const categorySection = createCategorySection(category, works);
+                gridContainer.appendChild(categorySection);
             }
         });
         
