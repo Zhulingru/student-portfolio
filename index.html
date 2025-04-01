@@ -139,9 +139,11 @@
     <script src="assets/js/background/sketch.js"></script>
     
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        // 等待所有腳本載入完成
+        window.addEventListener('load', function() {
             const welcomeOverlay = document.getElementById('welcomeOverlay');
             const startButton = document.getElementById('startButton');
+            const gallery = document.querySelector('.gallery');
             let bgmController = null;
 
             // 初始化音頻控制器
@@ -154,6 +156,12 @@
             // 禁止滾動
             document.body.style.overflow = 'hidden';
 
+            // 確保 gallery 區域在開始時是隱藏的
+            if (gallery) {
+                gallery.style.opacity = '0';
+                gallery.style.transition = 'opacity 0.5s ease';
+            }
+
             startButton.addEventListener('click', async function() {
                 // 禁用按鈕防止重複點擊
                 startButton.disabled = true;
@@ -162,7 +170,7 @@
                 try {
                     // 開始播放音樂
                     if (bgmController) {
-                        await bgmController.start();
+                        await bgmController.start().catch(console.error);
                     }
                     
                     // 淡出歡迎介面
@@ -171,13 +179,28 @@
                     // 啟用滾動
                     document.body.style.overflow = '';
                     
-                    // 移除歡迎介面
+                    // 移除歡迎介面並顯示內容
                     setTimeout(() => {
                         welcomeOverlay.classList.add('hidden');
+                        if (gallery) {
+                            gallery.style.opacity = '1';
+                        }
+                        // 調用 main.js 中的初始化函數
+                        if (typeof initializePage === 'function') {
+                            initializePage().catch(console.error);
+                        } else {
+                            console.error('initializePage function not found');
+                            loadWorks().then(works => {
+                                if (gallery && Array.isArray(works)) {
+                                    const categorizedWorks = groupWorksByCategory(works);
+                                    const categorySections = Object.entries(categorizedWorks)
+                                        .map(([category, works]) => renderCategorySection(category, works))
+                                        .join('');
+                                    gallery.innerHTML = categorySections;
+                                }
+                            }).catch(console.error);
+                        }
                     }, 500);
-
-                    // 初始化頁面
-                    await initializePage();
                 } catch (error) {
                     console.error('Error during start:', error);
                     // 如果出錯，重新啟用按鈕
