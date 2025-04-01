@@ -4,67 +4,81 @@ class BGMController {
         
         // 修正路徑處理邏輯
         const isGitHubPages = window.location.hostname.includes('github.io');
+        // 修正：移除多餘的 /assets 前綴
         const basePath = isGitHubPages ? 'https://zhulingru.github.io/student-portfolio' : '';
-        const audioPath1 = `${basePath}/assets/audio/background music1.mp3`;
-        const audioPath2 = `${basePath}/assets/audio/background music2.mp3`;
+        
+        // 使用 encodeURIComponent 處理檔案名稱中的空格
+        const audioPath1 = `${basePath}/assets/audio/${encodeURIComponent('background music1.mp3')}`;
+        const audioPath2 = `${basePath}/assets/audio/${encodeURIComponent('background music2.mp3')}`;
         
         console.log('Current hostname:', window.location.hostname);
         console.log('Is GitHub Pages:', isGitHubPages);
         console.log('Base path:', basePath);
         console.log('Loading audio from:', audioPath1, audioPath2);
         
-        this.music1 = new Audio(audioPath1);
-        this.music2 = new Audio(audioPath2);
-        
-        this.currentTrack = null;
-        this.fadeOutDuration = 3000;
-        this.waitDuration = 3000;
-        this.isPlaying = false;
+        // 預加載音頻
+        this.preloadAudio(audioPath1, audioPath2);
+    }
 
-        // 添加詳細的錯誤處理
-        this.music1.addEventListener('error', (e) => {
-            console.error('Error loading music1:', e);
-            console.error('Music1 error details:', this.music1.error);
-            console.log('Music1 source:', this.music1.src);
-            console.log('Music1 ready state:', this.music1.readyState);
-        });
+    async preloadAudio(path1, path2) {
+        try {
+            this.music1 = new Audio();
+            this.music2 = new Audio();
+            
+            // 設置跨域屬性
+            this.music1.crossOrigin = 'anonymous';
+            this.music2.crossOrigin = 'anonymous';
+            
+            // 設置音頻源
+            this.music1.src = path1;
+            this.music2.src = path2;
+            
+            // 初始化其他屬性
+            this.currentTrack = null;
+            this.fadeOutDuration = 3000;
+            this.waitDuration = 3000;
+            this.isPlaying = false;
 
-        this.music2.addEventListener('error', (e) => {
-            console.error('Error loading music2:', e);
-            console.error('Music2 error details:', this.music2.error);
-            console.log('Music2 source:', this.music2.src);
-            console.log('Music2 ready state:', this.music2.readyState);
-        });
+            // 添加錯誤處理
+            this.music1.addEventListener('error', (e) => {
+                console.error('Error loading music1:', e);
+                console.error('Music1 error details:', this.music1.error);
+                console.log('Music1 source:', this.music1.src);
+                console.log('Music1 ready state:', this.music1.readyState);
+            });
 
-        // 添加加載成功的回調
-        this.music1.addEventListener('loadeddata', () => {
-            console.log('Music1 loaded successfully');
-            console.log('Music1 duration:', this.music1.duration);
-        });
+            this.music2.addEventListener('error', (e) => {
+                console.error('Error loading music2:', e);
+                console.error('Music2 error details:', this.music2.error);
+                console.log('Music2 source:', this.music2.src);
+                console.log('Music2 ready state:', this.music2.readyState);
+            });
 
-        this.music2.addEventListener('loadeddata', () => {
-            console.log('Music2 loaded successfully');
-            console.log('Music2 duration:', this.music2.duration);
-        });
+            // 加載成功回調
+            this.music1.addEventListener('loadeddata', () => {
+                console.log('Music1 loaded successfully');
+                console.log('Music1 duration:', this.music1.duration);
+            });
 
-        // 添加可以播放的回調
-        this.music1.addEventListener('canplay', () => {
-            console.log('Music1 can play');
-        });
+            this.music2.addEventListener('loadeddata', () => {
+                console.log('Music2 loaded successfully');
+                console.log('Music2 duration:', this.music2.duration);
+            });
 
-        this.music2.addEventListener('canplay', () => {
-            console.log('Music2 can play');
-        });
+            // 設置循環播放
+            this.music1.addEventListener('ended', () => this.handleTrackEnd());
+            this.music2.addEventListener('ended', () => this.handleTrackEnd());
 
-        // 設置循環播放
-        this.music1.addEventListener('ended', () => this.handleTrackEnd());
-        this.music2.addEventListener('ended', () => this.handleTrackEnd());
+            // 開始預加載
+            await Promise.all([
+                this.music1.load(),
+                this.music2.load()
+            ]);
 
-        // 設置音量
-        this.music1.volume = 1;
-        this.music2.volume = 1;
-
-        console.log('BGMController initialized');
+            console.log('Audio files preloaded successfully');
+        } catch (error) {
+            console.error('Error preloading audio:', error);
+        }
     }
 
     async start() {
