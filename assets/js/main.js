@@ -11,53 +11,37 @@ class WorkItem {
     }
 }
 
-// 載入作品資料
+// 加載作品數據
 async function loadWorks() {
     try {
-        // 顯示載入中的提示
-        const gallery = document.querySelector('.gallery');
-        if (gallery) {
-            gallery.innerHTML = '<div class="text-center">載入中...</div>';
-        }
-
-        // 獲取當前頁面的基礎路徑
-        const basePath = window.location.pathname.includes('student-portfolio') ? '/student-portfolio' : '';
-        const response = await fetch(`${basePath}/data/works.json`);
-        
+        // 添加時間戳參數來防止快取
+        const timestamp = new Date().getTime();
+        const response = await fetch(`data/works.json?t=${timestamp}`);
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error('Failed to load works data');
         }
-        
-        const text = await response.text();
-        let data;
-        try {
-            data = JSON.parse(text);
-        } catch (e) {
-            throw new Error('無法解析作品資料');
-        }
-
-        if (!data || !Array.isArray(data.works)) {
-            throw new Error('作品資料格式不正確');
-        }
-
-        return data.works.map(work => new WorkItem(work));
+        const data = await response.json();
+        return data;
     } catch (error) {
-        throw error;
+        console.error('Error loading works:', error);
+        return [];
     }
 }
 
-// 建立作品卡片
-function createWorkCard(work) {
+// 渲染作品卡片
+function renderWorkCard(work) {
     return `
-        <div class="work-card">
+        <div class="card">
             <div class="card-body">
                 <h5 class="card-title">${work.title}</h5>
-                <p class="card-text">${work.desc}</p>
-                <div class="card-meta">
-                    <small>作者：${work.student}</small>
-                    <small>日期：${work.date}</small>
+                <p class="card-text">${work.description}</p>
+                <div class="card-footer">
+                    <div class="author-date">
+                        <span>作者：${work.author}</span>
+                        <span>日期：${work.date}</span>
+                    </div>
+                    <a href="${work.link}" class="btn btn-primary">查看作品</a>
                 </div>
-                <a href="${work.link || '#'}" class="btn-view" target="_blank">查看作品</a>
             </div>
         </div>
     `;
@@ -73,7 +57,7 @@ function createCategorySection(category, works) {
     categorySection.innerHTML = `
         <h2 class="category-title">${category}</h2>
         <div class="category-content">
-            ${works.map(work => createWorkCard(work)).join('')}
+            ${works.map(work => renderWorkCard(work)).join('')}
         </div>
     `;
     
