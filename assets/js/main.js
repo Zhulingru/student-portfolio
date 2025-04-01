@@ -49,13 +49,13 @@ async function loadWorks() {
 // 建立作品卡片
 function createWorkCard(work) {
     return `
-        <div class="work-card mb-3">
+        <div class="work-card">
             <div class="card-body">
                 <h5 class="card-title">${work.title}</h5>
                 <p class="card-text">${work.desc}</p>
                 <div class="card-meta">
-                    <small class="text-muted">作者：${work.student}</small>
-                    <small class="text-muted">日期：${work.date}</small>
+                    <small>作者：${work.student}</small>
+                    <small>日期：${work.date}</small>
                 </div>
                 ${work.link ? `<a href="${work.link}" class="btn-view mt-2" target="_blank">查看作品</a>` : ''}
             </div>
