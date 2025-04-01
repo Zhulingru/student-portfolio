@@ -101,19 +101,33 @@ async function displayWorks() {
         // 顯示每個分類的作品
         Object.entries(categorizedWorks).forEach(([category, works]) => {
             if (works.length > 0) {
+                const categorySection = document.createElement('section');
+                categorySection.id = category.toLowerCase().replace(/\s+/g, '-');
+                
                 const categoryTitle = document.createElement('h2');
                 categoryTitle.className = 'category-title';
                 categoryTitle.textContent = category;
-                gallery.appendChild(categoryTitle);
+                categorySection.appendChild(categoryTitle);
                 
                 const row = document.createElement('div');
                 row.className = 'row';
                 works.forEach(work => {
                     row.innerHTML += createWorkCard(work);
                 });
-                gallery.appendChild(row);
+                categorySection.appendChild(row);
+                gallery.appendChild(categorySection);
             }
         });
+        
+        // 處理錨點導航
+        if (window.location.hash) {
+            const targetElement = document.querySelector(window.location.hash);
+            if (targetElement) {
+                setTimeout(() => {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            }
+        }
         
         console.log('Display completed!');
     } catch (error) {
@@ -128,6 +142,20 @@ async function displayWorks() {
         </div>`;
     }
 }
+
+// 處理導航點擊
+document.addEventListener('click', (e) => {
+    if (e.target.matches('.nav-link')) {
+        e.preventDefault();
+        const targetId = e.target.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+            // 更新 URL，但不重新載入頁面
+            history.pushState(null, '', targetId);
+        }
+    }
+});
 
 // 當頁面載入完成時執行
 document.addEventListener('DOMContentLoaded', () => {
