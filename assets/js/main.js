@@ -13,8 +13,10 @@ class WorkItem {
 // 載入作品資料
 async function loadWorks() {
     try {
-        const response = await fetch('/student-portfolio/data/works.json');
+        // 使用相對路徑
+        const response = await fetch('../data/works.json');
         const data = await response.json();
+        console.log('Loaded data:', data); // 添加除錯訊息
         return data.works.map(work => new WorkItem(work));
     } catch (error) {
         console.error('Error loading works:', error);
@@ -41,35 +43,54 @@ function createWorkCard(work) {
 
 // 顯示作品
 async function displayWorks() {
-    const works = await loadWorks();
-    const gallery = document.querySelector('.gallery');
-    
-    // 按分類組織作品
-    const categorizedWorks = {};
-    works.forEach(work => {
-        if (!categorizedWorks[work.category]) {
-            categorizedWorks[work.category] = [];
+    try {
+        console.log('Starting to display works...'); // 添加除錯訊息
+        const works = await loadWorks();
+        console.log('Loaded works:', works); // 添加除錯訊息
+        
+        const gallery = document.querySelector('.gallery');
+        if (!gallery) {
+            console.error('Gallery element not found!'); // 添加除錯訊息
+            return;
         }
-        categorizedWorks[work.category].push(work);
-    });
-    
-    // 顯示每個分類的作品
-    Object.entries(categorizedWorks).forEach(([category, works]) => {
-        if (works.length > 0) {
-            const categoryTitle = document.createElement('h2');
-            categoryTitle.className = 'category-title';
-            categoryTitle.textContent = category;
-            gallery.appendChild(categoryTitle);
-            
-            const row = document.createElement('div');
-            row.className = 'row';
-            works.forEach(work => {
-                row.innerHTML += createWorkCard(work);
-            });
-            gallery.appendChild(row);
-        }
-    });
+        
+        // 清空現有內容
+        gallery.innerHTML = '';
+        
+        // 按分類組織作品
+        const categorizedWorks = {};
+        works.forEach(work => {
+            if (!categorizedWorks[work.category]) {
+                categorizedWorks[work.category] = [];
+            }
+            categorizedWorks[work.category].push(work);
+        });
+        
+        // 顯示每個分類的作品
+        Object.entries(categorizedWorks).forEach(([category, works]) => {
+            if (works.length > 0) {
+                const categoryTitle = document.createElement('h2');
+                categoryTitle.className = 'category-title';
+                categoryTitle.textContent = category;
+                gallery.appendChild(categoryTitle);
+                
+                const row = document.createElement('div');
+                row.className = 'row';
+                works.forEach(work => {
+                    row.innerHTML += createWorkCard(work);
+                });
+                gallery.appendChild(row);
+            }
+        });
+        
+        console.log('Display completed!'); // 添加除錯訊息
+    } catch (error) {
+        console.error('Error in displayWorks:', error); // 添加除錯訊息
+    }
 }
 
 // 當頁面載入完成時執行
-document.addEventListener('DOMContentLoaded', displayWorks); 
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM Content Loaded'); // 添加除錯訊息
+    displayWorks();
+}); 
