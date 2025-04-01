@@ -17,7 +17,7 @@ async function loadWorks() {
         // 顯示載入中的提示
         const gallery = document.querySelector('.gallery');
         if (gallery) {
-            gallery.innerHTML = '<div class="col-12"><p class="text-center">載入中...</p></div>';
+            gallery.innerHTML = '<div class="text-center">載入中...</div>';
         }
 
         // 獲取當前頁面的基礎路徑
@@ -33,7 +33,6 @@ async function loadWorks() {
         try {
             data = JSON.parse(text);
         } catch (e) {
-            console.error('JSON parsing error:', e);
             throw new Error('無法解析作品資料');
         }
 
@@ -43,7 +42,6 @@ async function loadWorks() {
 
         return data.works.map(work => new WorkItem(work));
     } catch (error) {
-        console.error('Error loading works:', error);
         throw error;
     }
 }
@@ -51,18 +49,28 @@ async function loadWorks() {
 // 建立作品卡片
 function createWorkCard(work) {
     return `
-        <div class="col-md-4 col-sm-6 mb-4">
-            <div class="work-card">
-                <div class="card-body">
-                    <span class="category">${work.category}</span>
-                    <h5 class="card-title">${work.title}</h5>
-                    <p class="card-text">${work.desc}</p>
-                    <div class="card-meta">
-                        <small class="text-muted">作者：${work.student}</small>
-                        <small class="text-muted">日期：${work.date}</small>
-                    </div>
-                    ${work.link ? `<a href="${work.link}" class="btn-view mt-2" target="_blank">查看作品</a>` : ''}
+        <div class="work-card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">${work.title}</h5>
+                <p class="card-text">${work.desc}</p>
+                <div class="card-meta">
+                    <small class="text-muted">作者：${work.student}</small>
+                    <small class="text-muted">日期：${work.date}</small>
                 </div>
+                ${work.link ? `<a href="${work.link}" class="btn-view mt-2" target="_blank">查看作品</a>` : ''}
+            </div>
+        </div>
+    `;
+}
+
+// 建立分類區塊
+function createCategorySection(category, works) {
+    const sectionId = category.toLowerCase().replace(/\s+/g, '-');
+    return `
+        <div class="category-section" id="${sectionId}">
+            <h2 class="category-title">${category}</h2>
+            <div class="category-content">
+                ${works.map(work => createWorkCard(work)).join('')}
             </div>
         </div>
     `;
@@ -79,7 +87,7 @@ async function displayWorks() {
         const works = await loadWorks();
         
         if (!works || works.length === 0) {
-            gallery.innerHTML = '<div class="col-12"><p class="text-center">目前沒有作品</p></div>';
+            gallery.innerHTML = '<div class="text-center">目前沒有作品</div>';
             return;
         }
         
@@ -92,34 +100,20 @@ async function displayWorks() {
             categorizedWorks[work.category].push(work);
         });
         
-        // 準備 HTML 內容
-        const content = document.createDocumentFragment();
+        // 創建網格容器
+        const gridContainer = document.createElement('div');
+        gridContainer.className = 'category-grid';
         
-        // 顯示每個分類的作品
+        // 添加每個分類區塊
         Object.entries(categorizedWorks).forEach(([category, works]) => {
             if (works.length > 0) {
-                const categorySection = document.createElement('section');
-                categorySection.id = category.toLowerCase().replace(/\s+/g, '-');
-                
-                const categoryTitle = document.createElement('h2');
-                categoryTitle.className = 'category-title';
-                categoryTitle.textContent = category;
-                categorySection.appendChild(categoryTitle);
-                
-                const row = document.createElement('div');
-                row.className = 'row';
-                
-                // 一次性設置 innerHTML
-                row.innerHTML = works.map(work => createWorkCard(work)).join('');
-                
-                categorySection.appendChild(row);
-                content.appendChild(categorySection);
+                gridContainer.innerHTML += createCategorySection(category, works);
             }
         });
         
-        // 一次性更新 DOM
+        // 更新頁面
         gallery.innerHTML = '';
-        gallery.appendChild(content);
+        gallery.appendChild(gridContainer);
         
         // 處理錨點導航
         if (window.location.hash) {
@@ -131,14 +125,14 @@ async function displayWorks() {
             }
         }
     } catch (error) {
-        gallery.innerHTML = `<div class="col-12">
+        gallery.innerHTML = `
             <div class="alert alert-danger" role="alert">
                 <h4 class="alert-heading">載入失敗</h4>
                 <p>${error.message || '載入作品時發生錯誤'}</p>
                 <hr>
                 <p class="mb-0">請稍後再試，或聯繫管理員</p>
             </div>
-        </div>`;
+        `;
     }
 }
 
