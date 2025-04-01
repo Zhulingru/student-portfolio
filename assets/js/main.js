@@ -5,7 +5,6 @@ class WorkItem {
         this.title = data.title;
         this.desc = data.desc;
         this.category = data.category;
-        this.image = data.image;
         this.link = data.link;
         this.student = data.student;
         this.date = data.date;
@@ -52,14 +51,9 @@ async function loadWorks() {
 
 // 建立作品卡片
 function createWorkCard(work) {
-    const imageHtml = work.image 
-        ? `<img src="${work.image}" alt="${work.title}" class="card-img-top">` 
-        : '<div class="card-img-placeholder"></div>';
-
     return `
         <div class="col-md-4 col-sm-6 mb-4">
             <div class="work-card">
-                ${imageHtml}
                 <div class="card-body">
                     <span class="category">${work.category}</span>
                     <h5 class="card-title">${work.title}</h5>
