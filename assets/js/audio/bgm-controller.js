@@ -21,11 +21,10 @@ class BGMController {
         
         // 設置音頻屬性
         [this.music1, this.music2].forEach(audio => {
-            audio.preload = 'auto';  // 預加載
-            audio.loop = false;      // 不循環（我們自己處理循環）
-            audio.volume = 0;        // 初始音量為0
-            audio.autoplay = true;   // 嘗試自動播放
-            audio.muted = false;     // 不靜音
+            audio.preload = 'auto';
+            audio.loop = false;
+            audio.volume = 0;
+            audio.muted = true; // 初始設置為靜音
         });
         
         // 設置音源
@@ -37,12 +36,13 @@ class BGMController {
         this.fadeOutDuration = 3000;
         this.waitDuration = 3000;
         this.isPlaying = false;
+        this.hasInteracted = false;
         
         // 設置事件監聽器
         this.setupEventListeners();
         
-        // 自動開始播放
-        this.autoStart();
+        // 嘗試自動播放
+        this.tryAutoplay();
     }
 
     setupEventListeners() {
@@ -77,59 +77,68 @@ class BGMController {
         this.music2.addEventListener('ended', () => this.handleTrackEnd());
     }
 
-    async autoStart() {
+    async tryAutoplay() {
         try {
-            // 嘗試自動播放
-            const playPromise = this.music1.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    console.log('Autoplay started successfully');
-                    this.currentTrack = this.music1;
-                    this.isPlaying = true;
-                    this.fadeIn(this.currentTrack);
-                }).catch(error => {
-                    console.log('Autoplay prevented:', error);
-                    // 如果自動播放失敗，等待用戶交互
-                    this.setupAutoplayFallback();
-                });
-            }
+            // 先靜音播放
+            this.music1.muted = true;
+            this.music1.volume = 0;
+            await this.music1.play();
+            
+            // 如果播放成功，逐漸取消靜音並增加音量
+            setTimeout(() => {
+                if (this.music1.paused) return;
+                this.music1.muted = false;
+                this.fadeInVolume(this.music1);
+                this.currentTrack = this.music1;
+                this.isPlaying = true;
+            }, 1000);
+            
         } catch (error) {
-            console.error('Error during autostart:', error);
+            console.log('Autoplay failed, waiting for user interaction:', error);
             this.setupAutoplayFallback();
         }
     }
 
-    setupAutoplayFallback() {
-        const startAudio = () => {
-            this.start();
-            // 移除所有事件監聽器
-            ['click', 'touchstart', 'keydown'].forEach(event => {
-                document.removeEventListener(event, startAudio);
-            });
-        };
-
-        // 添加事件監聽器
-        ['click', 'touchstart', 'keydown'].forEach(event => {
-            document.removeEventListener(event, startAudio); // 先移除舊的
-            document.addEventListener(event, startAudio);
-        });
+    fadeInVolume(track) {
+        let volume = 0;
+        const fadeInterval = setInterval(() => {
+            if (volume < 1) {
+                volume = Math.min(volume + 0.1, 1);
+                if (!track.muted) {
+                    track.volume = volume;
+                }
+            } else {
+                clearInterval(fadeInterval);
+            }
+        }, 200);
     }
 
-    async start() {
-        console.log('Attempting to start playback...');
-        if (this.isPlaying) {
-            console.log('Already playing, skipping start');
-            return;
-        }
-        
-        try {
-            this.isPlaying = true;
-            this.currentTrack = this.music1;
-            console.log('Starting playback with music1');
-            await this.playTrack(this.music1);
-        } catch (error) {
-            console.error('Error starting playback:', error);
-        }
+    setupAutoplayFallback() {
+        const startAudio = async () => {
+            if (this.hasInteracted) return;
+            this.hasInteracted = true;
+            
+            try {
+                this.music1.muted = false;
+                this.music1.volume = 0;
+                await this.music1.play();
+                this.fadeInVolume(this.music1);
+                this.currentTrack = this.music1;
+                this.isPlaying = true;
+                
+                // 移除所有事件監聽器
+                ['click', 'touchstart', 'keydown', 'scroll'].forEach(event => {
+                    document.removeEventListener(event, startAudio);
+                });
+            } catch (error) {
+                console.error('Playback failed after interaction:', error);
+            }
+        };
+
+        // 添加更多的事件監聽器
+        ['click', 'touchstart', 'keydown', 'scroll'].forEach(event => {
+            document.addEventListener(event, startAudio, { once: true });
+        });
     }
 
     async handleTrackEnd() {
@@ -170,18 +179,6 @@ class BGMController {
                 console.error('Playback failed:', error.message);
             }
         }
-    }
-
-    fadeInVolume(track) {
-        track.volume = 0;
-        track.muted = false;
-        const fadeInterval = setInterval(() => {
-            if (track.volume < 1) {
-                track.volume = Math.min(track.volume + 0.1, 1);
-            } else {
-                clearInterval(fadeInterval);
-            }
-        }, 200);
     }
 
     async fadeOut(track) {
