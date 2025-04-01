@@ -1,106 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <title>學生作品展示平台 - 太陽龐克特調</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom, #fceabb, #f8b500);
-      color: #333;
-      margin: 0;
-      padding: 2rem;
-    }
-    .logo {
-      text-align: center;
-    }
-    .logo img {
-      height: 100px;
-      margin-bottom: 1rem;
-    }
-    h1 {
-      text-align: center;
-      color: #fff;
-      text-shadow: 2px 2px #ff6f00;
-      margin-top: 0;
-    }
-    .gallery {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-    .card {
-      width: 280px;
-      background: #fff8e1;
-      border: 3px solid #ffca28;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-      transition: transform 0.2s ease;
-    }
-    .card:hover {
-      transform: translateY(-5px) scale(1.02);
-    }
-    .card img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      border-bottom: 2px solid #ffb300;
-    }
-    .card h3 {
-      margin: 0.8rem;
-      color: #e65100;
-    }
-    .card p {
-      font-size: 0.9rem;
-      padding: 0 1rem;
-      color: #5d4037;
-    }
-    .card a {
-      display: block;
-      background: #ff9800;
-      color: white;
-      text-align: center;
-      margin: 1rem;
-      padding: 0.5rem;
-      text-decoration: none;
-      border-radius: 8px;
-    }
-    .card a:hover {
-      background: #fb8c00;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學生作品集</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="assets/css/style.css" rel="stylesheet">
 </head>
 <body>
+    <!-- 導航欄 -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">學生作品集</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#scratch-animation">Scratch動畫</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#scratch-game">Scratch遊戲</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#codespark">CodeSpark遊戲</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#makecode">MakeCode Arcade</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#cospaces">CoSpaces</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#microbit">micro:bit</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tech">生活科技</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#project">專案分享</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#ai">AI科技</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-  <!-- 🌞 Logo 區塊 -->
-  <div class="logo">
-    <img src="website%20logo.jpg" alt="網站 Logo">
-  </div>
-
-  <h1>學生作品展示｜太陽龐克特調</h1>
-
-  <div class="gallery">
-
-    <!-- Scratch 動畫 -->
-    <div class="card">
-      <img src="https://via.placeholder.com/280x160?text=Scratch動畫" alt="Scratch 動畫縮圖">
-      <h3>外星來客</h3>
-      <p>這是我使用 Scratch 製作的動畫，講述外星人第一次來地球的故事！</p>
-      <a href="https://scratch.mit.edu/projects/12345678/" target="_blank">觀看動畫</a>
+    <!-- 主要內容區 -->
+    <div class="container mt-4">
+        <!-- 作品展示區域 -->
+        <div class="gallery row">
+            <!-- 作品卡片將由 JavaScript 動態載入 -->
+        </div>
     </div>
 
-    <!-- CodeSpark 遊戲 -->
-    <div class="card">
-      <img src="https://via.placeholder.com/280x160?text=CodeSpark遊戲" alt="CodeSpark 遊戲縮圖">
-      <h3>地底迷宮逃脫</h3>
-      <p>用 CodeSpark 設計的解謎關卡，要幫助角色逃出陷阱重重的迷宮。</p>
-      <a href="#" target="_blank">目前僅展示圖片</a>
-    </div>
-
-  </div>
-
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="assets/js/main.js"></script>
 </body>
-</html>
+</html> 
