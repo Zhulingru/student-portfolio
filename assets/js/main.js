@@ -21,7 +21,7 @@ async function loadWorks() {
             throw new Error('Failed to load works data');
         }
         const data = await response.json();
-        return data.works; // 返回 works 數組
+        return data;
     } catch (error) {
         console.error('Error loading works:', error);
         return [];
@@ -34,10 +34,10 @@ function renderWorkCard(work) {
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">${work.title}</h5>
-                <p class="card-text">${work.desc}</p>
+                <p class="card-text">${work.description}</p>
                 <div class="card-footer">
                     <div class="author-date">
-                        <span>作者：${work.student}</span>
+                        <span>作者：${work.author}</span>
                         <span>日期：${work.date}</span>
                     </div>
                     <a href="${work.link}" class="btn btn-primary">查看作品</a>
@@ -85,7 +85,7 @@ async function displayWorks() {
             if (!categorizedWorks[work.category]) {
                 categorizedWorks[work.category] = [];
             }
-            categorizedWorks[work.category].push(new WorkItem(work));
+            categorizedWorks[work.category].push(work);
         });
         
         // 創建網格容器
@@ -93,9 +93,9 @@ async function displayWorks() {
         gridContainer.className = 'category-grid';
         
         // 添加每個分類區塊
-        Object.entries(categorizedWorks).forEach(([category, categoryWorks]) => {
-            if (categoryWorks.length > 0) {
-                const categorySection = createCategorySection(category, categoryWorks);
+        Object.entries(categorizedWorks).forEach(([category, works]) => {
+            if (works.length > 0) {
+                const categorySection = createCategorySection(category, works);
                 gridContainer.appendChild(categorySection);
             }
         });
