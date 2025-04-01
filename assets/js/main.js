@@ -13,7 +13,7 @@ class WorkItem {
 // 載入作品資料
 async function loadWorks() {
     try {
-        const response = await fetch('data/works.json');
+        const response = await fetch('../../data/works.json');
         const data = await response.json();
         return data.works.map(work => new WorkItem(work));
     } catch (error) {
