@@ -5,7 +5,7 @@
             "title": "Scratch 動畫作品",
             "desc": "這是一個使用 Scratch 製作的動畫作品，展示了基本的動畫製作技巧。",
             "category": "Scratch動畫",
-            "image": "https://via.placeholder.com/300x200",
+            "image": "https://picsum.photos/300/200?random=1",
             "link": "https://scratch.mit.edu/projects/example"
         },
         {
@@ -13,7 +13,7 @@
             "title": "Scratch 遊戲作品",
             "desc": "這是一個簡單的射擊遊戲，使用 Scratch 的遊戲製作功能完成。",
             "category": "Scratch遊戲",
-            "image": "https://via.placeholder.com/300x200",
+            "image": "https://picsum.photos/300/200?random=2",
             "link": "https://scratch.mit.edu/projects/example"
         },
         {
@@ -21,7 +21,7 @@
             "title": "CodeSpark 遊戲",
             "desc": "使用 CodeSpark 平台製作的互動遊戲，展示了程式設計的基本概念。",
             "category": "CodeSpark遊戲",
-            "image": "https://via.placeholder.com/300x200",
+            "image": "https://picsum.photos/300/200?random=3",
             "link": null
         }
     ]
