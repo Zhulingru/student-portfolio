@@ -15,6 +15,12 @@ class WorkItem {
 // 載入作品資料
 async function loadWorks() {
     try {
+        // 顯示載入中的提示
+        const gallery = document.querySelector('.gallery');
+        if (gallery) {
+            gallery.innerHTML = '<div class="col-12"><p class="text-center">載入中...</p></div>';
+        }
+
         // 獲取當前頁面的基礎路徑
         const basePath = window.location.pathname.includes('student-portfolio') ? '/student-portfolio' : '';
         const response = await fetch(`${basePath}/data/works.json`);
@@ -23,12 +29,24 @@ async function loadWorks() {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         
-        const data = await response.json();
+        const text = await response.text();
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch (e) {
+            console.error('JSON parsing error:', e);
+            throw new Error('無法解析作品資料');
+        }
+
+        if (!data || !Array.isArray(data.works)) {
+            throw new Error('作品資料格式不正確');
+        }
+
         console.log('Loaded data:', data);
         return data.works.map(work => new WorkItem(work));
     } catch (error) {
         console.error('Error loading works:', error);
-        return [];
+        throw error;
     }
 }
 
@@ -59,19 +77,18 @@ function createWorkCard(work) {
 
 // 顯示作品
 async function displayWorks() {
+    const gallery = document.querySelector('.gallery');
+    if (!gallery) {
+        console.error('找不到顯示區域');
+        return;
+    }
+
     try {
         console.log('Starting to display works...');
         const works = await loadWorks();
-        console.log('Loaded works:', works);
-        
-        const gallery = document.querySelector('.gallery');
-        if (!gallery) {
-            console.error('Gallery element not found!');
-            return;
-        }
         
         if (!works || works.length === 0) {
-            gallery.innerHTML = '<div class="col-12"><p class="text-center">無法載入作品資料</p></div>';
+            gallery.innerHTML = '<div class="col-12"><p class="text-center">目前沒有作品</p></div>';
             return;
         }
         
@@ -107,10 +124,14 @@ async function displayWorks() {
         console.log('Display completed!');
     } catch (error) {
         console.error('Error in displayWorks:', error);
-        const gallery = document.querySelector('.gallery');
-        if (gallery) {
-            gallery.innerHTML = '<div class="col-12"><p class="text-center">載入作品時發生錯誤</p></div>';
-        }
+        gallery.innerHTML = `<div class="col-12">
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">載入失敗</h4>
+                <p>${error.message || '載入作品時發生錯誤'}</p>
+                <hr>
+                <p class="mb-0">請稍後再試，或聯繫管理員</p>
+            </div>
+        </div>`;
     }
 }
 
