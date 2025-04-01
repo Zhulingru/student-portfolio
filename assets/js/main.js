@@ -41,7 +41,6 @@ async function loadWorks() {
             throw new Error('作品資料格式不正確');
         }
 
-        console.log('Loaded data:', data);
         return data.works.map(work => new WorkItem(work));
     } catch (error) {
         console.error('Error loading works:', error);
@@ -73,21 +72,16 @@ function createWorkCard(work) {
 async function displayWorks() {
     const gallery = document.querySelector('.gallery');
     if (!gallery) {
-        console.error('找不到顯示區域');
         return;
     }
 
     try {
-        console.log('Starting to display works...');
         const works = await loadWorks();
         
         if (!works || works.length === 0) {
             gallery.innerHTML = '<div class="col-12"><p class="text-center">目前沒有作品</p></div>';
             return;
         }
-        
-        // 清空現有內容
-        gallery.innerHTML = '';
         
         // 按分類組織作品
         const categorizedWorks = {};
@@ -97,6 +91,9 @@ async function displayWorks() {
             }
             categorizedWorks[work.category].push(work);
         });
+        
+        // 準備 HTML 內容
+        const content = document.createDocumentFragment();
         
         // 顯示每個分類的作品
         Object.entries(categorizedWorks).forEach(([category, works]) => {
@@ -111,27 +108,29 @@ async function displayWorks() {
                 
                 const row = document.createElement('div');
                 row.className = 'row';
-                works.forEach(work => {
-                    row.innerHTML += createWorkCard(work);
-                });
+                
+                // 一次性設置 innerHTML
+                row.innerHTML = works.map(work => createWorkCard(work)).join('');
+                
                 categorySection.appendChild(row);
-                gallery.appendChild(categorySection);
+                content.appendChild(categorySection);
             }
         });
+        
+        // 一次性更新 DOM
+        gallery.innerHTML = '';
+        gallery.appendChild(content);
         
         // 處理錨點導航
         if (window.location.hash) {
             const targetElement = document.querySelector(window.location.hash);
             if (targetElement) {
-                setTimeout(() => {
+                requestAnimationFrame(() => {
                     targetElement.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
+                });
             }
         }
-        
-        console.log('Display completed!');
     } catch (error) {
-        console.error('Error in displayWorks:', error);
         gallery.innerHTML = `<div class="col-12">
             <div class="alert alert-danger" role="alert">
                 <h4 class="alert-heading">載入失敗</h4>
@@ -151,7 +150,6 @@ document.addEventListener('click', (e) => {
         const targetElement = document.querySelector(targetId);
         if (targetElement) {
             targetElement.scrollIntoView({ behavior: 'smooth' });
-            // 更新 URL，但不重新載入頁面
             history.pushState(null, '', targetId);
         }
     }
@@ -159,6 +157,5 @@ document.addEventListener('click', (e) => {
 
 // 當頁面載入完成時執行
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM Content Loaded');
     displayWorks();
 }); 
