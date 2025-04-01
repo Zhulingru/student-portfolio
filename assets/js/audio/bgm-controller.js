@@ -1,11 +1,15 @@
 class BGMController {
     constructor() {
-        this.music1 = new Audio('/assets/audio/background music1.mp3');
-        this.music2 = new Audio('/assets/audio/background music2.mp3');
+        this.music1 = new Audio('./assets/audio/background music1.mp3');
+        this.music2 = new Audio('./assets/audio/background music2.mp3');
         this.currentTrack = null;
         this.fadeOutDuration = 3000; // 3秒淡出
         this.waitDuration = 3000; // 3秒等待
         this.isPlaying = false;
+
+        // 添加錯誤處理
+        this.music1.addEventListener('error', (e) => console.error('Error loading music1:', e));
+        this.music2.addEventListener('error', (e) => console.error('Error loading music2:', e));
 
         // 設置循環播放
         this.music1.addEventListener('ended', () => this.handleTrackEnd());
