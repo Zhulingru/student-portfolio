@@ -4,7 +4,7 @@ class BGMController {
         
         // 修正路徑處理邏輯
         const isGitHubPages = window.location.hostname.includes('github.io');
-        const basePath = isGitHubPages ? 'https://zhulingru.github.io/student-portfolio' : '';
+        const basePath = isGitHubPages ? '/student-portfolio' : '';
         
         // 使用不帶空格的文件名
         const audioPath1 = `${basePath}/assets/audio/background_music1.mp3`;
@@ -46,6 +46,10 @@ class BGMController {
             audio.addEventListener('error', (e) => {
                 console.error('Audio error:', e);
                 console.error('Error details:', audio.error);
+                console.error('Audio source:', audio.src);
+            });
+            audio.addEventListener('canplaythrough', () => {
+                console.log('Audio can play through:', audio.src);
             });
         });
     }
@@ -54,6 +58,16 @@ class BGMController {
         if (this.isPlaying) return;
         
         try {
+            // 確保音頻已經加載
+            await new Promise((resolve, reject) => {
+                if (this.music1.readyState >= 3) {
+                    resolve();
+                } else {
+                    this.music1.addEventListener('canplaythrough', resolve, { once: true });
+                    this.music1.addEventListener('error', reject, { once: true });
+                }
+            });
+
             this.currentTrack = this.music1;
             await this.music1.play();
             this.isPlaying = true;
