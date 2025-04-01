@@ -70,21 +70,24 @@ main.container {
 
 /* 分類網格布局 */
 .gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    padding: 2rem 0;
+    padding: 2rem;
 }
 
 .card {
     background: white;
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     height: 100%;
     display: flex;
     flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .card-body {
@@ -128,11 +131,7 @@ main.container {
 /* 分類網格布局 */
 .category-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
+    gap: 3rem;
     padding: 1rem;
 }
 
@@ -147,6 +146,7 @@ main.container {
     flex-direction: column;
     min-height: 300px;
     aspect-ratio: 1;
+    margin-bottom: 3rem;
 }
 
 .category-section:hover {
@@ -164,9 +164,10 @@ main.container {
 }
 
 .category-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    padding: 1.5rem 0;
 }
 
 /* 作品卡片樣式 */
@@ -270,5 +271,14 @@ main.container {
     
     .category-section {
         min-height: 250px;
+    }
+    
+    .category-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .card {
+        margin-bottom: 1.5rem;
     }
 } 

@@ -12,8 +12,70 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
     <!-- 添加音頻控制器 -->
     <script src="./assets/js/audio/bgm-controller.js"></script>
+    <style>
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .welcome-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 90%;
+            width: 400px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .welcome-content h2 {
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .welcome-content p {
+            margin-bottom: 2rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .start-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .start-button:hover {
+            background: #0056b3;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
+    <div id="welcomeOverlay" class="welcome-overlay">
+        <div class="welcome-content">
+            <h2>歡迎來到學生作品展示區</h2>
+            <p>這裡展示了我們學生們的創意作品，點擊下方按鈕開始瀏覽並啟動背景音樂。</p>
+            <button id="startButton" class="start-button">開始瀏覽</button>
+        </div>
+    </div>
+
     <!-- 背景画布容器 -->
     <div id="background-container"></div>
 
@@ -74,9 +136,30 @@
     <script src="assets/js/background/sketch.js"></script>
     
     <script>
-        // 在頁面加載完成後初始化音頻控制器
-        document.addEventListener('DOMContentLoaded', () => {
-            new BGMController();
+        document.addEventListener('DOMContentLoaded', function() {
+            const welcomeOverlay = document.getElementById('welcomeOverlay');
+            const startButton = document.getElementById('startButton');
+            const bgmController = new BGMController();
+
+            // 禁止滾動
+            document.body.style.overflow = 'hidden';
+
+            startButton.addEventListener('click', function() {
+                // 開始播放音樂
+                bgmController.start();
+                
+                // 淡出歡迎介面
+                welcomeOverlay.style.opacity = '0';
+                welcomeOverlay.style.transition = 'opacity 0.5s ease';
+                
+                // 啟用滾動
+                document.body.style.overflow = '';
+                
+                // 移除歡迎介面
+                setTimeout(() => {
+                    welcomeOverlay.classList.add('hidden');
+                }, 500);
+            });
         });
     </script>
 </body>
