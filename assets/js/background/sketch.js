@@ -1,12 +1,17 @@
 let particles = [];
 
 function setup() {
-  createCanvas(800, 600);
+  let canvas = createCanvas(windowWidth, windowHeight);
+  canvas.parent('background-container');
   background(10);
   noStroke();
   for (let i = 0; i < 80; i++) {
     particles.push(new Particle());
   }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
 
 function draw() {

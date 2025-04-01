@@ -7,6 +7,30 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    position: relative;
+}
+
+/* 背景畫布容器 */
+#background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.3;
+}
+
+#background-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* 圖片響應式樣式 */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
 }
 
 /* 導航欄樣式 */
