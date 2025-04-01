@@ -57,7 +57,7 @@ function createWorkCard(work) {
                     <small>作者：${work.student}</small>
                     <small>日期：${work.date}</small>
                 </div>
-                ${work.link ? `<a href="${work.link}" class="btn-view" target="_blank">查看作品</a>` : ''}
+                <a href="${work.link || '#'}" class="btn-view" target="_blank">查看作品</a>
             </div>
         </div>
     `;
