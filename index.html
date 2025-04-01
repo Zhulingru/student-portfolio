@@ -24,6 +24,8 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.5s ease;
         }
 
         .welcome-content {
@@ -55,15 +57,16 @@
             border-radius: 8px;
             font-size: 1.1rem;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .start-button:hover {
             background: #0056b3;
+            transform: translateY(-2px);
         }
 
         .hidden {
-            display: none;
+            display: none !important;
         }
     </style>
 </head>
@@ -71,7 +74,7 @@
     <div id="welcomeOverlay" class="welcome-overlay">
         <div class="welcome-content">
             <h2>歡迎來到學生作品展示區</h2>
-            <p>這裡展示了我們學生們的創意作品，點擊下方按鈕開始瀏覽並啟動背景音樂。</p>
+            <p>這裡展示了我們學生們的創意作品，點擊下方按鈕開始瀏覽。</p>
             <button id="startButton" class="start-button">開始瀏覽</button>
         </div>
     </div>
@@ -139,26 +142,48 @@
         document.addEventListener('DOMContentLoaded', function() {
             const welcomeOverlay = document.getElementById('welcomeOverlay');
             const startButton = document.getElementById('startButton');
-            const bgmController = new BGMController();
+            let bgmController = null;
+
+            // 初始化音頻控制器
+            try {
+                bgmController = new BGMController();
+            } catch (error) {
+                console.error('Failed to initialize BGMController:', error);
+            }
 
             // 禁止滾動
             document.body.style.overflow = 'hidden';
 
-            startButton.addEventListener('click', function() {
-                // 開始播放音樂
-                bgmController.start();
+            startButton.addEventListener('click', async function() {
+                // 禁用按鈕防止重複點擊
+                startButton.disabled = true;
+                startButton.style.opacity = '0.7';
                 
-                // 淡出歡迎介面
-                welcomeOverlay.style.opacity = '0';
-                welcomeOverlay.style.transition = 'opacity 0.5s ease';
-                
-                // 啟用滾動
-                document.body.style.overflow = '';
-                
-                // 移除歡迎介面
-                setTimeout(() => {
-                    welcomeOverlay.classList.add('hidden');
-                }, 500);
+                try {
+                    // 開始播放音樂
+                    if (bgmController) {
+                        await bgmController.start();
+                    }
+                    
+                    // 淡出歡迎介面
+                    welcomeOverlay.style.opacity = '0';
+                    
+                    // 啟用滾動
+                    document.body.style.overflow = '';
+                    
+                    // 移除歡迎介面
+                    setTimeout(() => {
+                        welcomeOverlay.classList.add('hidden');
+                    }, 500);
+
+                    // 初始化頁面
+                    await initializePage();
+                } catch (error) {
+                    console.error('Error during start:', error);
+                    // 如果出錯，重新啟用按鈕
+                    startButton.disabled = false;
+                    startButton.style.opacity = '1';
+                }
             });
         });
     </script>
