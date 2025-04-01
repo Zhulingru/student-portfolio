@@ -15,69 +15,104 @@ class BGMController {
         console.log('Base path:', basePath);
         console.log('Loading audio from:', audioPath1, audioPath2);
         
-        // 預加載音頻
-        this.preloadAudio(audioPath1, audioPath2);
+        // 創建音頻元素
+        this.music1 = new Audio();
+        this.music2 = new Audio();
+        
+        // 設置音頻屬性
+        [this.music1, this.music2].forEach(audio => {
+            audio.preload = 'auto';  // 預加載
+            audio.loop = false;      // 不循環（我們自己處理循環）
+            audio.volume = 0;        // 初始音量為0
+            audio.autoplay = true;   // 嘗試自動播放
+            audio.muted = false;     // 不靜音
+        });
+        
+        // 設置音源
+        this.music1.src = audioPath1;
+        this.music2.src = audioPath2;
+        
+        // 初始化其他屬性
+        this.currentTrack = null;
+        this.fadeOutDuration = 3000;
+        this.waitDuration = 3000;
+        this.isPlaying = false;
+        
+        // 設置事件監聽器
+        this.setupEventListeners();
+        
+        // 自動開始播放
+        this.autoStart();
     }
 
-    async preloadAudio(path1, path2) {
+    setupEventListeners() {
+        // 添加錯誤處理
+        this.music1.addEventListener('error', (e) => {
+            console.error('Error loading music1:', e);
+            console.error('Music1 error details:', this.music1.error);
+            console.log('Music1 source:', this.music1.src);
+            console.log('Music1 ready state:', this.music1.readyState);
+        });
+
+        this.music2.addEventListener('error', (e) => {
+            console.error('Error loading music2:', e);
+            console.error('Music2 error details:', this.music2.error);
+            console.log('Music2 source:', this.music2.src);
+            console.log('Music2 ready state:', this.music2.readyState);
+        });
+
+        // 加載成功回調
+        this.music1.addEventListener('loadeddata', () => {
+            console.log('Music1 loaded successfully');
+            console.log('Music1 duration:', this.music1.duration);
+        });
+
+        this.music2.addEventListener('loadeddata', () => {
+            console.log('Music2 loaded successfully');
+            console.log('Music2 duration:', this.music2.duration);
+        });
+
+        // 設置循環播放
+        this.music1.addEventListener('ended', () => this.handleTrackEnd());
+        this.music2.addEventListener('ended', () => this.handleTrackEnd());
+    }
+
+    async autoStart() {
         try {
-            this.music1 = new Audio();
-            this.music2 = new Audio();
-            
-            // 設置跨域屬性
-            this.music1.crossOrigin = 'anonymous';
-            this.music2.crossOrigin = 'anonymous';
-            
-            // 設置音頻源
-            this.music1.src = path1;
-            this.music2.src = path2;
-            
-            // 初始化其他屬性
-            this.currentTrack = null;
-            this.fadeOutDuration = 3000;
-            this.waitDuration = 3000;
-            this.isPlaying = false;
-
-            // 添加錯誤處理
-            this.music1.addEventListener('error', (e) => {
-                console.error('Error loading music1:', e);
-                console.error('Music1 error details:', this.music1.error);
-                console.log('Music1 source:', this.music1.src);
-                console.log('Music1 ready state:', this.music1.readyState);
-            });
-
-            this.music2.addEventListener('error', (e) => {
-                console.error('Error loading music2:', e);
-                console.error('Music2 error details:', this.music2.error);
-                console.log('Music2 source:', this.music2.src);
-                console.log('Music2 ready state:', this.music2.readyState);
-            });
-
-            // 加載成功回調
-            this.music1.addEventListener('loadeddata', () => {
-                console.log('Music1 loaded successfully');
-                console.log('Music1 duration:', this.music1.duration);
-            });
-
-            this.music2.addEventListener('loadeddata', () => {
-                console.log('Music2 loaded successfully');
-                console.log('Music2 duration:', this.music2.duration);
-            });
-
-            // 設置循環播放
-            this.music1.addEventListener('ended', () => this.handleTrackEnd());
-            this.music2.addEventListener('ended', () => this.handleTrackEnd());
-
-            // 開始預加載
-            await Promise.all([
-                this.music1.load(),
-                this.music2.load()
-            ]);
-
-            console.log('Audio files preloaded successfully');
+            // 嘗試自動播放
+            const playPromise = this.music1.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    console.log('Autoplay started successfully');
+                    this.currentTrack = this.music1;
+                    this.isPlaying = true;
+                    this.fadeIn(this.currentTrack);
+                }).catch(error => {
+                    console.log('Autoplay prevented:', error);
+                    // 如果自動播放失敗，等待用戶交互
+                    this.setupAutoplayFallback();
+                });
+            }
         } catch (error) {
-            console.error('Error preloading audio:', error);
+            console.error('Error during autostart:', error);
+            this.setupAutoplayFallback();
         }
+    }
+
+    setupAutoplayFallback() {
+        const startAudio = () => {
+            this.start();
+            // 移除所有事件監聽器
+            ['click', 'touchstart', 'keydown'].forEach(event => {
+                document.removeEventListener(event, startAudio);
+            });
+        };
+
+        // 添加事件監聽器
+        ['click', 'touchstart', 'keydown'].forEach(event => {
+            document.removeEventListener(event, startAudio); // 先移除舊的
+            document.addEventListener(event, startAudio);
+        });
     }
 
     async start() {

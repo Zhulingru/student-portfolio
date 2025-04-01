@@ -74,34 +74,9 @@
     <script src="assets/js/background/sketch.js"></script>
     
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const bgmController = new BGMController();
-            
-            // 在頁面加載完成後自動嘗試播放
-            const startAudio = async () => {
-                try {
-                    await bgmController.start();
-                } catch (error) {
-                    console.error('Failed to start audio:', error);
-                }
-            };
-
-            // 監聽任何用戶交互
-            const handleInteraction = async () => {
-                await startAudio();
-                // 移除所有事件監聽器，因為我們只需要觸發一次
-                document.removeEventListener('click', handleInteraction);
-                document.removeEventListener('touchstart', handleInteraction);
-                document.removeEventListener('keydown', handleInteraction);
-            };
-
-            // 添加多個事件監聽器以捕獲第一次用戶交互
-            document.addEventListener('click', handleInteraction);
-            document.addEventListener('touchstart', handleInteraction);
-            document.addEventListener('keydown', handleInteraction);
-
-            // 立即嘗試播放
-            startAudio();
+        // 在頁面加載完成後初始化音頻控制器
+        document.addEventListener('DOMContentLoaded', () => {
+            new BGMController();
         });
     </script>
 </body>
