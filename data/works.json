@@ -3,7 +3,7 @@
         {
             "id": "1",
             "title": "Scratch 動畫作品",
-            "desc": "這是一個使用 Scratch 製作的動畫作品，展示了基本的動畫製作技巧。",
+            "desc": "這是一個使用 Scratch 製作的動畫作品，展示了基本的動畫製作技巧，包含角色設計、場景轉換和互動效果的綜合運用。",
             "category": "Scratch動畫",
             "image": "",
             "link": "https://scratch.mit.edu/projects/example",
@@ -13,7 +13,7 @@
         {
             "id": "2",
             "title": "Scratch 遊戲作品",
-            "desc": "這是一個簡單又有趣的射擊遊戲，使用 Scratch 的遊戲功能製作完成。",
+            "desc": "這是一個簡單又有趣的射擊遊戲，使用 Scratch 的遊戲功能製作完成，加入了計分系統和多個關卡的豐富遊戲體驗。",
             "category": "Scratch遊戲",
             "image": "",
             "link": "https://scratch.mit.edu/projects/example",
@@ -23,7 +23,7 @@
         {
             "id": "3",
             "title": "CodeSpark 遊戲",
-            "desc": "使用 CodeSpark 平台製作的互動遊戲，展示了程式設計的基本操作概念。",
+            "desc": "使用 CodeSpark 平台製作的互動遊戲，展示了程式設計的基本操作概念，並結合趣味性任務和邏輯思維訓練的教育遊戲。",
             "category": "CodeSpark遊戲",
             "image": "",
             "link": "",
@@ -33,7 +33,7 @@
         {
             "id": "4",
             "title": "MakeCode Arcade 遊戲",
-            "desc": "使用 MakeCode Arcade 開發的復古風格遊戲，展示了基礎的遊戲程式設計概念。",
+            "desc": "使用 MakeCode Arcade 開發的復古風格遊戲，展示了基礎的遊戲程式設計概念，包含物理引擎應用和角色互動的經典遊戲設計。",
             "category": "MakeCode Arcade",
             "image": "",
             "link": "",
@@ -43,7 +43,7 @@
         {
             "id": "5",
             "title": "CoSpaces 3D世界",
-            "desc": "在 CoSpaces 中創建的 3D 互動環境，展示了虛擬實境的應用以及程式效果展現。",
+            "desc": "在 CoSpaces 中創建的 3D 互動環境，展示了虛擬實境的應用以及程式效果展現，融合空間設計和互動體驗的創新專案。",
             "category": "CoSpaces",
             "image": "",
             "link": "",
@@ -53,7 +53,7 @@
         {
             "id": "6",
             "title": "micro:bit 專案",
-            "desc": "使用 micro:bit 開發的互動裝置，展示了基礎的硬體程式設計與互動創意作品。",
+            "desc": "使用 micro:bit 開發的互動裝置，展示了基礎的硬體程式設計與互動創意作品，結合感應器應用和 LED 顯示的智慧互動系統。",
             "category": "micro:bit",
             "image": "",
             "link": "",
@@ -63,7 +63,7 @@
         {
             "id": "7",
             "title": "創意科技作品",
-            "desc": "結合不同材料和技術的創新作品，展示了生活科技的應用與電子電路小作品。",
+            "desc": "結合不同材料和技術的創新作品，展示了生活科技的應用與電子電路小作品，融入環保理念和永續發展的創意實作專案。",
             "category": "生活科技",
             "image": "",
             "link": "",
@@ -73,7 +73,7 @@
         {
             "id": "8",
             "title": "專題研究計畫",
-            "desc": "深入探討特定主題的研究專案，展示了問題解決和創新思維以及專案製作歷程。",
+            "desc": "深入探討特定主題的研究專案，展示了問題解決和創新思維以及專案製作歷程，包含完整的研究方法和數據分析的學術研究。",
             "category": "專案分享",
             "image": "",
             "link": "",
@@ -83,7 +83,7 @@
         {
             "id": "9",
             "title": "AI 應用專案",
-            "desc": "運用人工智慧技術開發的創新應用，展示了 AI 在生活中的應用以及AI程式設計。",
+            "desc": "運用人工智慧技術開發的創新應用，展示了 AI 在生活中的應用以及AI程式設計，整合機器學習模型和實際場景的智慧化解決方案。",
             "category": "AI科技",
             "image": "",
             "link": "",
