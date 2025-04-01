@@ -13,6 +13,7 @@ body {
 .navbar {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     background-color: #fff !important;
+    margin-bottom: 1rem;
 }
 
 .navbar-brand {
@@ -20,22 +21,31 @@ body {
     color: #2c3e50;
 }
 
+.navbar-nav {
+    flex-wrap: wrap;
+}
+
+.nav-link {
+    white-space: nowrap;
+    padding: 0.5rem 1rem !important;
+}
+
 /* 主要內容區 */
-.container {
+main.container {
     flex: 1;
-    padding: 2rem 1rem;
+    padding: 1rem;
 }
 
 /* 分類網格布局 */
 .gallery {
-    padding: 2rem 0;
+    width: 100%;
 }
 
 .category-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    margin: 0;
+    gap: 1.5rem;
+    width: 100%;
 }
 
 .category-section {
@@ -44,7 +54,8 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     padding: 1.5rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .category-section:hover {
@@ -62,7 +73,7 @@ body {
 }
 
 .category-content {
-    height: 100%;
+    flex: 1;
 }
 
 /* 作品卡片樣式 */
@@ -72,6 +83,10 @@ body {
     border-radius: 8px;
     margin-bottom: 1rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.work-card:last-child {
+    margin-bottom: 0;
 }
 
 .work-card:hover {
@@ -128,7 +143,7 @@ body {
 @media (max-width: 992px) {
     .category-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
+        gap: 1rem;
     }
 }
 
@@ -139,7 +154,7 @@ body {
     }
     
     .navbar-nav {
-        padding: 1rem 0;
+        padding: 0.5rem 0;
     }
     
     .work-card .card-meta {
@@ -147,7 +162,7 @@ body {
         gap: 0.5rem;
     }
     
-    .container {
-        padding: 1rem;
+    main.container {
+        padding: 0.5rem;
     }
 } 
