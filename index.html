@@ -2,68 +2,92 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>學生作品展示平台</title>
+  <title>學生作品展示平台 - 太陽龐克特調</title>
   <style>
-    body { font-family: sans-serif; padding: 2rem; background: #f5f5f5; }
-    h1 { text-align: center; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #fceabb, #f8b500);
+      color: #333;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 {
+      text-align: center;
+      color: #fff;
+      text-shadow: 2px 2px #ff6f00;
+    }
     .gallery {
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
       justify-content: center;
+      gap: 1.5rem;
       margin-top: 2rem;
     }
     .card {
-      width: 240px;
-      background: white;
-      border-radius: 12px;
+      width: 280px;
+      background: #fff8e1;
+      border: 3px solid #ffca28;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      text-align: center;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
       transition: transform 0.2s ease;
     }
     .card:hover {
-      transform: scale(1.05);
+      transform: translateY(-5px) scale(1.02);
     }
     .card img {
       width: 100%;
-      height: 140px;
+      height: 160px;
       object-fit: cover;
+      border-bottom: 2px solid #ffb300;
     }
     .card h3 {
-      font-size: 1rem;
-      margin: 0.5rem 0;
+      margin: 0.8rem;
+      color: #e65100;
     }
     .card p {
-      font-size: 0.85rem;
-      color: #555;
-      padding: 0 0.5rem 1rem;
+      font-size: 0.9rem;
+      padding: 0 1rem;
+      color: #5d4037;
     }
     .card a {
       display: block;
-      margin-bottom: 1rem;
-      color: #007bff;
+      background: #ff9800;
+      color: white;
+      text-align: center;
+      margin: 1rem;
+      padding: 0.5rem;
       text-decoration: none;
+      border-radius: 8px;
+    }
+    .card a:hover {
+      background: #fb8c00;
     }
   </style>
 </head>
 <body>
-  <h1>學生作品展示平台</h1>
+
+  <h1>🌞 學生作品展示｜太陽龐克風格</h1>
 
   <div class="gallery">
+
+    <!-- Scratch 動畫 -->
     <div class="card">
-      <img src="https://via.placeholder.com/240x140?text=Scratch動畫" alt="作品縮圖">
-      <h3>動畫：外星來客</h3>
-      <p>這是我第一次使用 Scratch 製作的動畫</p>
-      <a href="https://scratch.mit.edu/projects/12345678/" target="_blank">查看作品</a>
+      <img src="https://via.placeholder.com/280x160?text=Scratch動畫" alt="Scratch 動畫縮圖">
+      <h3>外星來客</h3>
+      <p>這是我使用 Scratch 製作的動畫，講述外星人第一次來地球的故事！</p>
+      <a href="https://scratch.mit.edu/projects/12345678/" target="_blank">觀看動畫</a>
     </div>
 
+    <!-- CodeSpark 遊戲 -->
     <div class="card">
-      <img src="https://via.placeholder.com/240x140?text=Arcade+Game" alt="作品縮圖">
-      <h3>遊戲：太空探險</h3>
-      <p>一款使用 MakeCode Arcade 製作的小遊戲</p>
-      <a href="https://arcade.makecode.com/..." target="_blank">開始遊戲</a>
+      <img src="https://via.placeholder.com/280x160?text=CodeSpark遊戲" alt="CodeSpark 遊戲縮圖">
+      <h3>地底迷宮逃脫</h3>
+      <p>用 CodeSpark 設計的解謎關卡，要幫助角色逃出陷阱重重的迷宮。</p>
+      <a href="#" target="_blank">目前僅展示圖片</a>
     </div>
+
   </div>
+
 </body>
 </html>
