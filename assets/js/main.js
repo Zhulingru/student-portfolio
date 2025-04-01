@@ -34,10 +34,10 @@ function renderWorkCard(work) {
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">${work.title}</h5>
-                <p class="card-text">${work.description}</p>
+                <p class="card-text">${work.desc}</p>
                 <div class="card-footer">
                     <div class="author-date">
-                        <span>作者：${work.author}</span>
+                        <span>作者：${work.student}</span>
                         <span>日期：${work.date}</span>
                     </div>
                     <a href="${work.link}" class="btn btn-primary">查看作品</a>
