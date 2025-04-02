@@ -29,16 +29,10 @@ class BGMController {
         
         // 初始化其他屬性
         this.currentTrack = null;
-        this.fadeOutDuration = 3000;
-        this.waitDuration = 3000;
         this.isPlaying = false;
-        this.hasInteracted = false;
         
         // 設置事件監聽器
         this.setupEventListeners();
-        
-        // 在所有可能的用戶交互事件上嘗試播放
-        this.setupPlayTriggers();
     }
 
     setupEventListeners() {
@@ -61,37 +55,23 @@ class BGMController {
         this.music2.addEventListener('ended', () => this.handleTrackEnd());
     }
 
-    setupPlayTriggers() {
-        const startPlayback = async () => {
-            if (this.hasInteracted) return;
-            this.hasInteracted = true;
+    async startPlayback() {
+        if (this.isPlaying) return;
+        
+        try {
+            // 先設置較低的音量
+            this.music1.volume = 0.1;
+            await this.music1.play();
+            this.currentTrack = this.music1;
+            this.isPlaying = true;
             
-            try {
-                // 先設置較低的音量
-                this.music1.volume = 0.1;
-                await this.music1.play();
-                this.currentTrack = this.music1;
-                this.isPlaying = true;
-                
-                // 逐漸增加音量
-                this.fadeInVolume(this.music1);
-                
-                console.log('Music started successfully');
-            } catch (error) {
-                console.error('Failed to start playback:', error);
-            }
-        };
-
-        // 添加所有可能的交互事件監聽器
-        ['click', 'touchstart', 'keydown', 'scroll', 'mousemove'].forEach(event => {
-            document.addEventListener(event, startPlayback, { once: true });
-        });
-
-        // 也在 DOMContentLoaded 時嘗試播放
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', startPlayback, { once: true });
-        } else {
-            startPlayback();
+            // 逐漸增加音量
+            this.fadeInVolume(this.music1);
+            
+            console.log('Music started successfully');
+        } catch (error) {
+            console.error('Failed to start playback:', error);
+            throw error; // 向上傳遞錯誤
         }
     }
 
@@ -124,6 +104,16 @@ class BGMController {
             console.log('Successfully switched to next track');
         } catch (error) {
             console.error('Error switching tracks:', error);
+        }
+    }
+
+    stop() {
+        if (!this.isPlaying) return;
+        
+        this.isPlaying = false;
+        if (this.currentTrack) {
+            this.currentTrack.pause();
+            this.currentTrack.currentTime = 0;
         }
     }
 } 
