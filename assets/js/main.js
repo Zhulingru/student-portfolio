@@ -16,7 +16,7 @@ async function loadWorks() {
     try {
         // 添加時間戳參數來防止快取
         const timestamp = new Date().getTime();
-        const response = await fetch(`data/works.json?t=${timestamp}`);
+        const response = await fetch(`/data/works.json?t=${timestamp}`);
         if (!response.ok) {
             throw new Error('Failed to load works data');
         }
