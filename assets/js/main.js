@@ -16,15 +16,32 @@ async function loadWorks() {
     try {
         // 添加時間戳參數來防止快取
         const timestamp = new Date().getTime();
-        const response = await fetch(`data/works.json?t=${timestamp}`);
+        
+        // 獲取正確的基礎路徑
+        const basePath = window.location.pathname.includes('student-portfolio') 
+            ? '/student-portfolio' 
+            : '';
+            
+        // 使用完整路徑
+        const response = await fetch(`${basePath}/data/works.json?t=${timestamp}`);
+        
         if (!response.ok) {
-            throw new Error('Failed to load works data');
+            console.error('Response not OK:', response.status, response.statusText);
+            throw new Error('載入失敗');
         }
+        
         const data = await response.json();
-        return data.works; // 返回 works 數組
+        console.log('Loaded data:', data);
+        
+        if (!data || !Array.isArray(data.works)) {
+            console.error('Invalid data format:', data);
+            throw new Error('數據格式錯誤');
+        }
+        
+        return data.works;
     } catch (error) {
         console.error('Error loading works:', error);
-        return [];
+        throw error;
     }
 }
 
@@ -64,12 +81,17 @@ function createCategorySection(category, works) {
 async function displayWorks() {
     const gallery = document.querySelector('.gallery');
     if (!gallery) {
-        console.error('Gallery element not found');
+        console.error('找不到 gallery 元素');
         return;
     }
 
     try {
+        // 顯示載入中的提示
+        gallery.innerHTML = '<div class="text-center">載入中...</div>';
+        
+        // 加載作品數據
         const works = await loadWorks();
+        console.log('Works loaded:', works); // 添加日誌
         
         if (!works || works.length === 0) {
             gallery.innerHTML = '<div class="text-center">目前沒有作品</div>';
@@ -79,11 +101,14 @@ async function displayWorks() {
         // 按分類組織作品
         const categorizedWorks = {};
         works.forEach(work => {
-            if (!categorizedWorks[work.category]) {
-                categorizedWorks[work.category] = [];
+            const category = work.category || '其他';
+            if (!categorizedWorks[category]) {
+                categorizedWorks[category] = [];
             }
-            categorizedWorks[work.category].push(work);
+            categorizedWorks[category].push(work);
         });
+        
+        console.log('Categorized works:', categorizedWorks); // 添加日誌
         
         // 創建所有分類區塊的 HTML
         const categorySections = Object.entries(categorizedWorks)
@@ -107,7 +132,7 @@ async function displayWorks() {
         gallery.innerHTML = `
             <div class="alert alert-danger" role="alert">
                 <h4 class="alert-heading">載入失敗</h4>
-                <p>${error.message || '載入作品時發生錯誤'}</p>
+                <p>${error.message}</p>
                 <hr>
                 <p class="mb-0">請稍後再試，或聯繫管理員</p>
             </div>
