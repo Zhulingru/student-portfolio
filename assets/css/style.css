@@ -72,57 +72,61 @@ main.container {
 .gallery {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    padding: 2rem 0;
+    gap: 3rem;
+    padding: 3rem 0;
 }
 
 .card {
     background: white;
     border-radius: 10px;
-    padding: 1.5rem;
+    padding: 2rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
     height: 100%;
     display: flex;
     flex-direction: column;
+    margin-bottom: 1rem;
 }
 
 .card-body {
     flex: 1;
     display: flex;
     flex-direction: column;
+    padding: 1rem 0;
 }
 
 .card-text {
     flex: 1;
-    min-height: 4.5rem; /* 確保三行文字的空間 */
-    margin-bottom: 1rem;
+    min-height: 4.8rem;
+    margin-bottom: 1.5rem;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
+    line-height: 1.6;
 }
 
 .card-footer {
     margin-top: auto;
     background: none;
     border-top: none;
-    padding: 0.5rem 0 0;
+    padding: 1rem 0 0;
 }
 
 .author-date {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     color: #666;
     font-size: 0.9rem;
 }
 
 .btn-primary {
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.75rem;
     border-radius: 5px;
+    margin-top: 0.5rem;
 }
 
 /* 分類網格布局 */
