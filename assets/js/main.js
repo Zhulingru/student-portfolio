@@ -21,7 +21,7 @@ async function loadWorks() {
             throw new Error('Failed to load works data');
         }
         const data = await response.json();
-        return data;
+        return data.works; // 返回 works 數組
     } catch (error) {
         console.error('Error loading works:', error);
         return [];
@@ -34,13 +34,13 @@ function renderWorkCard(work) {
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">${work.title}</h5>
-                <p class="card-text">${work.description}</p>
+                <p class="card-text">${work.desc}</p>
                 <div class="card-footer">
                     <div class="author-date">
-                        <span>作者：${work.author}</span>
+                        <span>作者：${work.student}</span>
                         <span>日期：${work.date}</span>
                     </div>
-                    <a href="${work.link}" class="btn btn-primary">查看作品</a>
+                    <a href="${work.link || '#'}" class="btn btn-primary">查看作品</a>
                 </div>
             </div>
         </div>
@@ -50,24 +50,21 @@ function renderWorkCard(work) {
 // 建立分類區塊
 function createCategorySection(category, works) {
     const sectionId = category.toLowerCase().replace(/\s+/g, '-');
-    const categorySection = document.createElement('div');
-    categorySection.className = 'category-section';
-    categorySection.id = sectionId;
-    
-    categorySection.innerHTML = `
-        <h2 class="category-title">${category}</h2>
-        <div class="category-content">
-            ${works.map(work => renderWorkCard(work)).join('')}
+    return `
+        <div class="category-section" id="${sectionId}">
+            <h2 class="category-title">${category}</h2>
+            <div class="category-content">
+                ${works.map(work => renderWorkCard(work)).join('')}
+            </div>
         </div>
     `;
-    
-    return categorySection;
 }
 
 // 顯示作品
 async function displayWorks() {
     const gallery = document.querySelector('.gallery');
     if (!gallery) {
+        console.error('Gallery element not found');
         return;
     }
 
@@ -88,32 +85,25 @@ async function displayWorks() {
             categorizedWorks[work.category].push(work);
         });
         
-        // 創建網格容器
-        const gridContainer = document.createElement('div');
-        gridContainer.className = 'category-grid';
-        
-        // 添加每個分類區塊
-        Object.entries(categorizedWorks).forEach(([category, works]) => {
-            if (works.length > 0) {
-                const categorySection = createCategorySection(category, works);
-                gridContainer.appendChild(categorySection);
-            }
-        });
+        // 創建所有分類區塊的 HTML
+        const categorySections = Object.entries(categorizedWorks)
+            .map(([category, categoryWorks]) => createCategorySection(category, categoryWorks))
+            .join('');
         
         // 更新頁面
-        gallery.innerHTML = '';
-        gallery.appendChild(gridContainer);
+        gallery.innerHTML = `<div class="category-grid">${categorySections}</div>`;
         
         // 處理錨點導航
         if (window.location.hash) {
             const targetElement = document.querySelector(window.location.hash);
             if (targetElement) {
-                requestAnimationFrame(() => {
+                setTimeout(() => {
                     targetElement.scrollIntoView({ behavior: 'smooth' });
-                });
+                }, 100);
             }
         }
     } catch (error) {
+        console.error('Error displaying works:', error);
         gallery.innerHTML = `
             <div class="alert alert-danger" role="alert">
                 <h4 class="alert-heading">載入失敗</h4>
@@ -139,6 +129,4 @@ document.addEventListener('click', (e) => {
 });
 
 // 當頁面載入完成時執行
-document.addEventListener('DOMContentLoaded', () => {
-    displayWorks();
-}); 
+document.addEventListener('DOMContentLoaded', displayWorks); 
