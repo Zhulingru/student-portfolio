@@ -17,12 +17,11 @@ async function loadWorks() {
         // 添加時間戳參數來防止快取
         const timestamp = new Date().getTime();
         const response = await fetch(`data/works.json?t=${timestamp}`);
-        console.log(response);
         if (!response.ok) {
             throw new Error('Failed to load works data');
         }
         const data = await response.json();
-        return [...data];
+        return data;
     } catch (error) {
         console.error('Error loading works:', error);
         return [];
