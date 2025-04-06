@@ -49,8 +49,14 @@ function renderWorkCard(work) {
     // 使用作品 ID 作為頁面參數
     const workDetailUrl = `work-detail.html?id=${work.id}&title=${encodeURIComponent(work.title)}&desc=${encodeURIComponent(work.desc)}`;
     
+    // 預設圖片
+    const defaultImage = './assets/images/default-work.jpg';
+    
     return `
         <div class="card">
+            <div class="card-img-container">
+                <img src="${work.image || defaultImage}" class="card-img-top" alt="${work.title}" onerror="this.src='${defaultImage}'">
+            </div>
             <div class="card-body">
                 <h5 class="card-title">${work.title}</h5>
                 <p class="card-text">${work.desc}</p>
