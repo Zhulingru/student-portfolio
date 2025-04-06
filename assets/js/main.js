@@ -151,18 +151,5 @@ async function displayWorks() {
     }
 }
 
-// 處理導航點擊
-document.addEventListener('click', (e) => {
-    if (e.target.matches('.nav-link')) {
-        e.preventDefault();
-        const targetId = e.target.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-            targetElement.scrollIntoView({ behavior: 'smooth' });
-            history.pushState(null, '', targetId);
-        }
-    }
-});
-
 // 當頁面載入完成時執行
 document.addEventListener('DOMContentLoaded', displayWorks); 
