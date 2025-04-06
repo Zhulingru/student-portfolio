@@ -49,13 +49,13 @@ function renderWorkCard(work) {
     // 使用作品 ID 作為頁面參數
     const workDetailUrl = `work-detail.html?id=${work.id}&title=${encodeURIComponent(work.title)}&desc=${encodeURIComponent(work.desc)}`;
     
-    // 預設圖片
-    const defaultImage = './assets/images/default-work.jpg';
+    // 使用 base64 編碼的預設圖片
+    const defaultImage = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7mnIDov5HliqDovInkuK08L3RleHQ+PC9zdmc+';
     
     return `
         <div class="card">
             <div class="card-img-container">
-                <img src="${work.image || defaultImage}" class="card-img-top" alt="${work.title}" onerror="this.src='${defaultImage}'">
+                <img src="${work.image || defaultImage}" class="card-img-top" alt="${work.title}">
             </div>
             <div class="card-body">
                 <h5 class="card-title">${work.title}</h5>
@@ -68,7 +68,21 @@ function renderWorkCard(work) {
 
 // 建立分類區塊
 function createCategorySection(category, works) {
-    const sectionId = category.toLowerCase().replace(/\s+/g, '-');
+    // 將中文分類名稱轉換為英文 ID
+    const categoryToId = {
+        'Scratch動畫': 'scratch-animation',
+        'Scratch遊戲': 'scratch-game',
+        'CodeSpark遊戲': 'codespark-game',
+        'MakeCode Arcade': 'makecode-arcade',
+        'CoSpaces': 'cospaces',
+        'micro:bit': 'microbit',
+        '生活科技': 'living-tech',
+        '專案分享': 'project-share',
+        'AI科技': 'ai-tech'
+    };
+
+    const sectionId = categoryToId[category] || category.toLowerCase().replace(/\s+/g, '-');
+    
     return `
         <div class="category-section" id="${sectionId}">
             <h2 class="category-title">${category}</h2>
