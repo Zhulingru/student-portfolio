@@ -20,14 +20,17 @@
     <!-- 主要內容區 -->
     <main class="container mt-4">
         <div id="work-content">
-            <h1 class="text-center mb-4">作品展示</h1>
             <div class="work-display">
                 <!-- 作品內容將在這裡顯示 -->
                 <div class="text-center">
-                    <h2 id="work-title">作品標題</h2>
-                    <p id="work-description" class="mt-3">作品描述</p>
-                    <div id="work-iframe-container" class="mt-4">
-                        <!-- 作品內容（如 iframe）將在這裡顯示 -->
+                    <h2 id="work-title" class="mb-4">作品標題</h2>
+                    <p id="work-description" class="mb-4">作品描述</p>
+                    <div id="work-container" class="mt-4">
+                        <!-- 這裡之後可以放作品內容 -->
+                        <div class="placeholder-content p-5 bg-light rounded">
+                            <h3>作品 ID: <span id="work-id"></span></h3>
+                            <p class="mt-3">這裡將展示作品內容</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -41,23 +44,17 @@
         // 從 URL 參數獲取作品信息
         document.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
+            const id = params.get('id') || '未知';
             const title = params.get('title') || '作品標題';
             const desc = params.get('desc') || '作品描述';
-            const link = params.get('link') || '#';
 
             // 更新頁面內容
+            document.getElementById('work-id').textContent = id;
             document.getElementById('work-title').textContent = title;
             document.getElementById('work-description').textContent = desc;
             
-            // 如果有連結，可以在這裡處理作品展示
-            const iframeContainer = document.getElementById('work-iframe-container');
-            if (link && link !== '#') {
-                iframeContainer.innerHTML = `
-                    <div class="ratio ratio-16x9">
-                        <iframe src="${link}" allowfullscreen></iframe>
-                    </div>
-                `;
-            }
+            // 設置頁面標題
+            document.title = `${title} - 作品展示`;
         });
     </script>
 </body>

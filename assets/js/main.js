@@ -46,7 +46,8 @@ async function loadWorks() {
 
 // 渲染作品卡片
 function renderWorkCard(work) {
-    const workDetailUrl = `work-detail.html?title=${encodeURIComponent(work.title)}&desc=${encodeURIComponent(work.desc)}&link=${encodeURIComponent(work.link || '')}`;
+    // 使用作品 ID 作為頁面參數
+    const workDetailUrl = `work-detail.html?id=${work.id}&title=${encodeURIComponent(work.title)}&desc=${encodeURIComponent(work.desc)}`;
     
     return `
         <div class="card">
