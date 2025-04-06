@@ -6,7 +6,7 @@
             "desc": "這是一個使用 Scratch 製作的動畫作品，展示了基本的動畫製作技巧。",
             "category": "Scratch動畫",
             "image": "",
-            "link": "https://scratch.mit.edu/projects/example",
+            "link": "https://scratch.mit.edu/projects/example"
         },
         {
             "id": "2",
@@ -14,7 +14,7 @@
             "desc": "這是一個簡單又有趣的射擊遊戲，使用 Scratch 的遊戲功能製作完成。",
             "category": "Scratch遊戲",
             "image": "",
-            "link": "https://scratch.mit.edu/projects/example",
+            "link": "https://scratch.mit.edu/projects/example"
         },
         {
             "id": "3",
@@ -22,7 +22,7 @@
             "desc": "使用 CodeSpark 平台製作的互動遊戲，展示了程式設計的基本操作概念。",
             "category": "CodeSpark遊戲",
             "image": "",
-            "link": "",
+            "link": ""
         },
         {
             "id": "4",
@@ -30,7 +30,7 @@
             "desc": "使用 MakeCode Arcade 開發的復古風格遊戲，展示了基礎的遊戲程式設計概念。",
             "category": "MakeCode Arcade",
             "image": "",
-            "link": "",
+            "link": ""
         },
         {
             "id": "5",
@@ -38,7 +38,7 @@
             "desc": "在 CoSpaces 中創建的 3D 互動環境，展示了虛擬實境的應用以及程式效果展現。",
             "category": "CoSpaces",
             "image": "",
-            "link": "",
+            "link": ""
         },
         {
             "id": "6",
@@ -46,7 +46,7 @@
             "desc": "使用 micro:bit 開發的互動裝置，展示了基礎的硬體程式設計與互動創意作品。",
             "category": "micro:bit",
             "image": "",
-            "link": "",
+            "link": ""
         },
         {
             "id": "7",
@@ -54,7 +54,7 @@
             "desc": "結合不同材料和技術的創新作品，展示了生活科技的應用與電子電路小作品。",
             "category": "生活科技",
             "image": "",
-            "link": "",
+            "link": ""
         },
         {
             "id": "8",
@@ -62,7 +62,7 @@
             "desc": "深入探討特定主題的研究專案，展示了問題解決和創新思維以及專案製作歷程。",
             "category": "專案分享",
             "image": "",
-            "link": "",
+            "link": ""
         },
         {
             "id": "9",
@@ -70,7 +70,7 @@
             "desc": "運用人工智慧技術開發的創新應用，展示了 AI 在生活中的應用以及AI程式設計。",
             "category": "AI科技",
             "image": "",
-            "link": "",
+            "link": ""
         }
     ]
 } 
