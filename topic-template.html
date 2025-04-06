@@ -3,31 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>學生作品集</title>
+    <title>主題介紹 - 學生作品集</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="./assets/css/style.css" rel="stylesheet">
-    <!-- 添加 p5.js 库 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
-    <!-- 添加音頻控制器 -->
-    <script src="./assets/js/audio/bgm-controller.js"></script>
 </head>
 <body>
-    <!-- 背景画布容器 -->
-    <div id="background-container"></div>
-
-    <!-- 音樂控制按鈕 -->
-    <div id="music-control" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
-        <button id="play-music" class="btn btn-primary" style="border-radius: 50%; width: 50px; height: 50px; padding: 0;">
-            <i class="fas fa-volume-up"></i>
-        </button>
-    </div>
-
     <!-- 導航欄 -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="./">學生作品集</a>
+            <a class="navbar-brand" href="./index.html">學生作品集</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -66,45 +52,48 @@
     </nav>
 
     <!-- 主要內容區 -->
-    <main class="container">
-        <!-- 作品展示區域 -->
-        <div class="gallery">
-            <!-- 作品卡片將由 JavaScript 動態載入 -->
+    <main class="container mt-4">
+        <div class="topic-content">
+            <h1 class="topic-title mb-4">[主題名稱]</h1>
+            
+            <!-- 主題介紹 -->
+            <section class="topic-introduction mb-5">
+                <h2>介紹</h2>
+                <p>[主題介紹內容]</p>
+            </section>
+
+            <!-- 教學內容 -->
+            <section class="topic-tutorial mb-5">
+                <h2>教學內容</h2>
+                <div class="tutorial-content">
+                    [教學內容]
+                </div>
+            </section>
+
+            <!-- 相關主題 -->
+            <section class="related-topics mb-5">
+                <h2>相關主題</h2>
+                <div class="related-content">
+                    [相關主題內容]
+                </div>
+            </section>
+
+            <!-- 作品展示 -->
+            <section class="work-showcase">
+                <h2>作品展示</h2>
+                <div class="work-preview mb-4">
+                    [作品預覽]
+                </div>
+                <div class="text-center">
+                    <a href="work-detail.html?id=[作品ID]" class="btn btn-primary" style="max-width: 200px;">
+                        查看作品
+                    </a>
+                </div>
+            </section>
         </div>
     </main>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JS -->
-    <script src="./assets/js/main.js"></script>
-    <!-- 添加背景效果脚本 -->
-    <script src="assets/js/background/sketch.js"></script>
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    
-    <script>
-        // 在頁面加載完成後初始化音頻控制器
-        document.addEventListener('DOMContentLoaded', () => {
-            const bgmController = new BGMController();
-            const playButton = document.getElementById('play-music');
-            let isPlaying = false;
-            
-            playButton.addEventListener('click', async () => {
-                try {
-                    if (!isPlaying) {
-                        await bgmController.startPlayback();
-                        playButton.querySelector('i').className = 'fas fa-volume-mute';
-                    } else {
-                        await bgmController.stopPlayback();
-                        playButton.querySelector('i').className = 'fas fa-volume-up';
-                    }
-                    isPlaying = !isPlaying;
-                } catch (error) {
-                    console.error('Failed to toggle music:', error);
-                }
-            });
-        });
-    </script>
 </body>
 </html> 
