@@ -51,9 +51,7 @@ function renderWorkCard(work) {
             <div class="card-body">
                 <h5 class="card-title">${work.title}</h5>
                 <p class="card-text">${work.desc}</p>
-                <div class="card-footer">
-                    <a href="${work.link || '#'}" class="btn btn-primary">查看作品</a>
-                </div>
+                <a href="${work.link || '#'}" class="btn btn-primary">查看作品</a>
             </div>
         </div>
     `;
