@@ -49,14 +49,9 @@ function renderWorkCard(work) {
     // 使用作品 ID 作為頁面參數
     const workDetailUrl = `work-detail.html?id=${work.id}&title=${encodeURIComponent(work.title)}&desc=${encodeURIComponent(work.desc)}`;
     
-    // 使用 base64 編碼的預設圖片
-    const defaultImage = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7mnIDov5HliqDovInkuK08L3RleHQ+PC9zdmc+';
-    
+    // 使用純 CSS 背景作為預設圖片
     return `
         <div class="card">
-            <div class="card-img-container">
-                <img src="${work.image || defaultImage}" class="card-img-top" alt="${work.title}">
-            </div>
             <div class="card-body">
                 <h5 class="card-title">${work.title}</h5>
                 <p class="card-text">${work.desc}</p>
