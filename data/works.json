@@ -7,8 +7,6 @@
             "category": "Scratch動畫",
             "image": "",
             "link": "https://scratch.mit.edu/projects/example",
-            "student": "王小明",
-            "date": "2024-04-01"
         },
         {
             "id": "2",
@@ -17,8 +15,6 @@
             "category": "Scratch遊戲",
             "image": "",
             "link": "https://scratch.mit.edu/projects/example",
-            "student": "李小華",
-            "date": "2024-04-01"
         },
         {
             "id": "3",
@@ -27,8 +23,6 @@
             "category": "CodeSpark遊戲",
             "image": "",
             "link": "",
-            "student": "張小美",
-            "date": "2024-04-01"
         },
         {
             "id": "4",
@@ -37,8 +31,6 @@
             "category": "MakeCode Arcade",
             "image": "",
             "link": "",
-            "student": "陳小強",
-            "date": "2024-04-01"
         },
         {
             "id": "5",
@@ -47,8 +39,6 @@
             "category": "CoSpaces",
             "image": "",
             "link": "",
-            "student": "林小玉",
-            "date": "2024-04-01"
         },
         {
             "id": "6",
@@ -57,8 +47,6 @@
             "category": "micro:bit",
             "image": "",
             "link": "",
-            "student": "黃小龍",
-            "date": "2024-04-01"
         },
         {
             "id": "7",
@@ -67,8 +55,6 @@
             "category": "生活科技",
             "image": "",
             "link": "",
-            "student": "周小雲",
-            "date": "2024-04-01"
         },
         {
             "id": "8",
@@ -77,8 +63,6 @@
             "category": "專案分享",
             "image": "",
             "link": "",
-            "student": "楊小風",
-            "date": "2024-04-01"
         },
         {
             "id": "9",
@@ -87,8 +71,6 @@
             "category": "AI科技",
             "image": "",
             "link": "",
-            "student": "劉小雨",
-            "date": "2024-04-01"
         }
     ]
 } 
