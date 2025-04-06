@@ -116,4 +116,16 @@ class BGMController {
             this.currentTrack.currentTime = 0;
         }
     }
+
+    async stopPlayback() {
+        try {
+            this.music1.pause();
+            this.music2.pause();
+            this.music1.currentTime = 0;
+            this.music2.currentTime = 0;
+        } catch (error) {
+            console.error('Error stopping audio:', error);
+            throw error;
+        }
+    }
 } 
