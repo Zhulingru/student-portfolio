@@ -5,9 +5,8 @@ class WorkItem {
         this.title = data.title;
         this.desc = data.desc;
         this.category = data.category;
+        this.image = data.image;
         this.link = data.link;
-        this.student = data.student;
-        this.date = data.date;
     }
 }
 
@@ -53,10 +52,6 @@ function renderWorkCard(work) {
                 <h5 class="card-title">${work.title}</h5>
                 <p class="card-text">${work.desc}</p>
                 <div class="card-footer">
-                    <div class="author-date">
-                        <span>作者：${work.student}</span>
-                        <span>日期：${work.date}</span>
-                    </div>
                     <a href="${work.link || '#'}" class="btn btn-primary">查看作品</a>
                 </div>
             </div>
