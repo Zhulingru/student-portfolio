@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作品展示</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="./assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- 導航欄 -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="./index.html">返回作品集</a>
+        </div>
+    </nav>
+
+    <!-- 主要內容區 -->
+    <main class="container mt-4">
+        <div id="work-content">
+            <h1 class="text-center mb-4">作品展示</h1>
+            <div class="work-display">
+                <!-- 作品內容將在這裡顯示 -->
+                <div class="text-center">
+                    <h2 id="work-title">作品標題</h2>
+                    <p id="work-description" class="mt-3">作品描述</p>
+                    <div id="work-iframe-container" class="mt-4">
+                        <!-- 作品內容（如 iframe）將在這裡顯示 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // 從 URL 參數獲取作品信息
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const title = params.get('title') || '作品標題';
+            const desc = params.get('desc') || '作品描述';
+            const link = params.get('link') || '#';
+
+            // 更新頁面內容
+            document.getElementById('work-title').textContent = title;
+            document.getElementById('work-description').textContent = desc;
+            
+            // 如果有連結，可以在這裡處理作品展示
+            const iframeContainer = document.getElementById('work-iframe-container');
+            if (link && link !== '#') {
+                iframeContainer.innerHTML = `
+                    <div class="ratio ratio-16x9">
+                        <iframe src="${link}" allowfullscreen></iframe>
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+</html> 

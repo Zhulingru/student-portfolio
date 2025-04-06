@@ -46,12 +46,14 @@ async function loadWorks() {
 
 // 渲染作品卡片
 function renderWorkCard(work) {
+    const workDetailUrl = `work-detail.html?title=${encodeURIComponent(work.title)}&desc=${encodeURIComponent(work.desc)}&link=${encodeURIComponent(work.link || '')}`;
+    
     return `
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">${work.title}</h5>
                 <p class="card-text">${work.desc}</p>
-                <a href="${work.link || '#'}" class="btn btn-primary">查看作品</a>
+                <a href="${workDetailUrl}" class="btn btn-primary">查看作品</a>
             </div>
         </div>
     `;
