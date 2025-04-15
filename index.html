@@ -98,13 +98,17 @@
                     if (!isPlaying) {
                         await bgmController.startPlayback();
                         playButton.querySelector('i').className = 'fas fa-volume-mute';
+                        isPlaying = true;
                     } else {
                         await bgmController.stopPlayback();
                         playButton.querySelector('i').className = 'fas fa-volume-up';
+                        isPlaying = false;
                     }
-                    isPlaying = !isPlaying;
                 } catch (error) {
                     console.error('Failed to toggle music:', error);
+                    // 確保在錯誤時重置狀態
+                    isPlaying = false;
+                    playButton.querySelector('i').className = 'fas fa-volume-up';
                 }
             });
         });

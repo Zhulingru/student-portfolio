@@ -59,6 +59,8 @@ class BGMController {
         if (this.isPlaying) return;
         
         try {
+            // 確保音樂從頭開始播放
+            this.music1.currentTime = 0;
             // 先設置較低的音量
             this.music1.volume = 0.1;
             await this.music1.play();
@@ -71,7 +73,8 @@ class BGMController {
             console.log('Music started successfully');
         } catch (error) {
             console.error('Failed to start playback:', error);
-            throw error; // 向上傳遞錯誤
+            this.isPlaying = false; // 確保在錯誤時重置狀態
+            throw error;
         }
     }
 
@@ -104,25 +107,24 @@ class BGMController {
             console.log('Successfully switched to next track');
         } catch (error) {
             console.error('Error switching tracks:', error);
-        }
-    }
-
-    stop() {
-        if (!this.isPlaying) return;
-        
-        this.isPlaying = false;
-        if (this.currentTrack) {
-            this.currentTrack.pause();
-            this.currentTrack.currentTime = 0;
+            this.isPlaying = false; // 確保在錯誤時重置狀態
         }
     }
 
     async stopPlayback() {
         try {
+            // 停止當前播放
+            if (this.currentTrack) {
+                await this.currentTrack.pause();
+                this.currentTrack.currentTime = 0;
+            }
+            // 停止所有音樂並重置
             this.music1.pause();
             this.music2.pause();
             this.music1.currentTime = 0;
             this.music2.currentTime = 0;
+            this.isPlaying = false;
+            this.currentTrack = null;
         } catch (error) {
             console.error('Error stopping audio:', error);
             throw error;
