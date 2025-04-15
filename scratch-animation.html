@@ -6,6 +6,8 @@
     <title>Scratch動畫 - 學生作品集</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="./assets/css/style.css" rel="stylesheet">
 </head>
@@ -62,28 +64,33 @@
             <!-- 主題介紹 -->
             <section class="topic-intro mb-5">
                 <h2>介紹</h2>
-                <p>Scratch是一個優秀的動畫創作平台，讓學生能夠輕鬆地將自己的創意轉化為生動的動畫作品。通過簡單的積木式程式設計，學生可以創造出豐富多彩的角色動畫、互動故事和視覺效果。</p>
+                <strong class="highlight-text">Scratch 是一個適合初學者的動畫創作平台，讓學生透過積木式程式輕鬆上手，將天馬行空的點子變成有聲有色的動畫作品。</strong>
+                <p>在這裡，每個孩子都是創意導演，可以自由發揮想像力，創造獨一無二的角色、設計生動的場景、編寫有趣的故事情節。透過動手實作，不僅培養程式邏輯思維，更能提升藝術創作能力和表達能力。</p>
             </section>
 
             <!-- 教學內容 -->
             <section class="topic-tutorial mb-5">
                 <h2>教學內容</h2>
                 <div class="tutorial-content">
-                    <h3>基礎概念</h3>
-                    <ul>
-                        <li>認識Scratch介面</li>
-                        <li>角色和背景設計</li>
-                        <li>動作和控制</li>
-                        <li>音效和音樂</li>
-                    </ul>
+                    <div class="tutorial-section basic">
+                        <h3>基礎概念</h3>
+                        <ul>
+                            <li>🎯 <span>認識Scratch介面與基本操作</span></li>
+                            <li>🎨 <span>角色和背景設計技巧</span></li>
+                            <li>🎭 <span>動作和控制指令運用</span></li>
+                            <li>🎵 <span>音效和音樂製作</span></li>
+                        </ul>
+                    </div>
 
-                    <h3>進階技巧</h3>
-                    <ul>
-                        <li>角色互動設計</li>
-                        <li>動畫特效製作</li>
-                        <li>故事情節規劃</li>
-                        <li>作品優化與除錯</li>
-                    </ul>
+                    <div class="tutorial-section advanced">
+                        <h3>進階技巧</h3>
+                        <ul>
+                            <li>🤝 <span>角色互動設計與實作</span></li>
+                            <li>✨ <span>動畫特效製作與應用</span></li>
+                            <li>📝 <span>故事情節規劃與編排</span></li>
+                            <li>🔧 <span>作品優化與除錯技巧</span></li>
+                        </ul>
+                    </div>
                 </div>
             </section>
 
@@ -91,15 +98,35 @@
             <section class="related-topics mb-5">
                 <h2>相關主題</h2>
                 <div class="row">
-                    <!-- 待添加外部網站連結 -->
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Scratch 遊戲設計入門</h5>
+                                <p class="card-text">探索如何將動畫技巧應用在遊戲創作中。</p>
+                                <a href="scratch-game.html" class="btn btn-outline-primary">了解更多</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">動畫腳本設計基礎</h5>
+                                <p class="card-text">學習如何規劃和編寫引人入勝的動畫故事。</p>
+                                <a href="#" class="btn btn-outline-primary">即將推出</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
             <!-- 作品展示 -->
             <section class="work-showcase text-center">
                 <h2>作品展示</h2>
-                <p class="mb-4">查看學生們使用Scratch創作的精彩動畫作品。</p>
-                <a href="work-detail.html?category=scratch-animation" class="btn btn-primary btn-lg">查看作品</a>
+                <p class="mb-4">在這裡，你可以欣賞到學生們精心創作的Scratch動畫作品。每個作品都展現了獨特的創意思維和豐富的想像力，讓我們一起來感受這些充滿活力的數位創作吧！</p>
+                <a href="work-detail.html?category=scratch-animation" class="btn btn-primary btn-lg btn-view-works">
+                    <i class="fas fa-eye"></i>
+                    <span>👀 查看學生作品</span>
+                </a>
             </section>
         </div>
     </main>
