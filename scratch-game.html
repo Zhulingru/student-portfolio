@@ -8,6 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="./assets/css/style.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <!-- 導航欄 -->
@@ -62,43 +64,44 @@
             <!-- 主題介紹 -->
             <section class="topic-intro mb-5">
                 <h2>介紹</h2>
-                <p>Scratch不僅可以製作動畫，更是一個強大的遊戲開發平台。學生可以運用程式邏輯、互動設計和遊戲機制，創造出有趣且具有教育意義的遊戲作品。</p>
+                <div class="intro-highlight mb-3">
+                    Scratch 遊戲開發讓學生化身為遊戲設計師，運用程式邏輯和創意思維，打造屬於自己的互動遊戲世界。
+                </div>
+                <p>在遊戲開發的過程中，學生不僅能學習程式設計的基本概念，更能培養邏輯思維、問題解決能力和創意表達。從簡單的追逐遊戲到複雜的冒險解謎，每個作品都展現出學生獨特的想像力和設計天賦。透過遊戲創作，學生能夠理解遊戲機制設計、使用者體驗優化，以及專案管理的重要性。</p>
             </section>
 
             <!-- 教學內容 -->
             <section class="topic-tutorial mb-5">
                 <h2>教學內容</h2>
                 <div class="tutorial-content">
-                    <h3>基礎概念</h3>
-                    <ul>
-                        <li>遊戲設計基礎</li>
-                        <li>角色互動控制</li>
-                        <li>分數與計時系統</li>
-                        <li>碰撞檢測</li>
-                    </ul>
+                    <div class="concept-block basic-concepts">
+                        <h3>基礎概念</h3>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-gamepad"></i> 遊戲機制設計</li>
+                            <li><i class="fas fa-arrows-alt"></i> 角色移動控制</li>
+                            <li><i class="fas fa-heart"></i> 生命值與計分系統</li>
+                            <li><i class="fas fa-random"></i> 隨機元素運用</li>
+                        </ul>
+                    </div>
 
-                    <h3>進階技巧</h3>
-                    <ul>
-                        <li>遊戲關卡設計</li>
-                        <li>遊戲平衡性調整</li>
-                        <li>音效與背景音樂</li>
-                        <li>遊戲測試與優化</li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- 相關主題 -->
-            <section class="related-topics mb-5">
-                <h2>相關主題</h2>
-                <div class="row">
-                    <!-- 待添加外部網站連結 -->
+                    <div class="concept-block advanced-concepts">
+                        <h3>進階技巧</h3>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-clock"></i> 遊戲狀態管理</li>
+                            <li><i class="fas fa-puzzle-piece"></i> 關卡設計原理</li>
+                            <li><i class="fas fa-star"></i> 特效與動畫整合</li>
+                            <li><i class="fas fa-cogs"></i> 遊戲平衡調校</li>
+                        </ul>
+                    </div>
                 </div>
             </section>
 
             <!-- 作品展示 -->
             <section class="work-showcase text-center">
-                <p class="mb-4">查看學生們使用Scratch開發的遊戲作品。</p>
-                <a href="work-detail.html?category=scratch-game" class="btn btn-primary btn-lg">查看作品</a>
+                <p class="mb-4">查看學生們使用 Scratch 開發的遊戲作品</p>
+                <a href="work-detail.html?category=scratch-game" class="btn btn-primary btn-lg view-works-btn">
+                    <i class="fas fa-eye"></i> 查看學生作品
+                </a>
             </section>
         </div>
     </main>

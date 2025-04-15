@@ -8,6 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="./assets/css/style.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <!-- 導航欄 -->
@@ -57,48 +59,49 @@
     <!-- 主要內容區 -->
     <main class="container mt-4">
         <div class="topic-content">
-            <h1 class="topic-title mb-4">CodeSpark遊戲設計</h1>
+            <h1 class="topic-title mb-4">CodeSpark遊戲創作</h1>
             
             <!-- 主題介紹 -->
             <section class="topic-intro mb-5">
                 <h2>介紹</h2>
-                <p>CodeSpark是一個專為兒童設計的程式學習平台，通過遊戲化的方式讓學生學習基本的程式設計概念。學生可以在平台上創建自己的遊戲，同時培養邏輯思維和問題解決能力。</p>
+                <div class="intro-highlight mb-3">
+                    CodeSpark Academy 是一個專為兒童設計的程式學習平台，透過無文字的視覺化介面，讓孩子輕鬆學習程式邏輯，創造自己的遊戲世界。
+                </div>
+                <p>在 CodeSpark 的遊戲創作環境中，學生可以透過直覺的拖放介面，設計遊戲場景、創造角色互動，並實現豐富的遊戲玩法。這個平台特別適合初學程式的學生，因為它移除了程式語法的門檻，讓學生能專注在邏輯思維和創意發想上。每個遊戲作品都是學生程式思維和創意表達能力的最佳展現。</p>
             </section>
 
             <!-- 教學內容 -->
             <section class="topic-tutorial mb-5">
                 <h2>教學內容</h2>
                 <div class="tutorial-content">
-                    <h3>基礎概念</h3>
-                    <ul>
-                        <li>CodeSpark介面操作</li>
-                        <li>基本程式積木</li>
-                        <li>遊戲角色設定</li>
-                        <li>簡單互動設計</li>
-                    </ul>
+                    <div class="concept-block basic-concepts">
+                        <h3>基礎概念</h3>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-cube"></i> 積木式程式設計</li>
+                            <li><i class="fas fa-map"></i> 遊戲場景設計</li>
+                            <li><i class="fas fa-running"></i> 角色行為設定</li>
+                            <li><i class="fas fa-shapes"></i> 基本互動元素</li>
+                        </ul>
+                    </div>
 
-                    <h3>進階技巧</h3>
-                    <ul>
-                        <li>條件判斷應用</li>
-                        <li>迴圈結構設計</li>
-                        <li>遊戲機制設計</li>
-                        <li>關卡進程規劃</li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- 相關主題 -->
-            <section class="related-topics mb-5">
-                <h2>相關主題</h2>
-                <div class="row">
-                    <!-- 待添加外部網站連結 -->
+                    <div class="concept-block advanced-concepts">
+                        <h3>進階技巧</h3>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-code-branch"></i> 條件與迴圈應用</li>
+                            <li><i class="fas fa-trophy"></i> 遊戲目標設計</li>
+                            <li><i class="fas fa-magic"></i> 特殊效果製作</li>
+                            <li><i class="fas fa-bug"></i> 除錯與優化</li>
+                        </ul>
+                    </div>
                 </div>
             </section>
 
             <!-- 作品展示 -->
             <section class="work-showcase text-center">
-                <p class="mb-4">查看學生們使用CodeSpark開發的遊戲作品。</p>
-                <a href="work-detail.html?category=codespark-game" class="btn btn-primary btn-lg">查看作品</a>
+                <p class="mb-4">查看學生們使用 CodeSpark 開發的遊戲作品</p>
+                <a href="work-detail.html?category=codespark-game" class="btn btn-primary btn-lg view-works-btn">
+                    <i class="fas fa-eye"></i> 查看學生作品
+                </a>
             </section>
         </div>
     </main>
