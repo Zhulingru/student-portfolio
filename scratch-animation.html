@@ -8,6 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="./assets/css/style.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <!-- 導航欄 -->
@@ -62,36 +64,44 @@
             <!-- 主題介紹 -->
             <section class="topic-intro mb-5">
                 <h2>介紹</h2>
-                <p>Scratch是一個優秀的動畫創作平台，讓學生能夠輕鬆地將自己的創意轉化為生動的動畫作品。通過簡單的積木式程式設計，學生可以創造出豐富多彩的角色動畫、互動故事和視覺效果。</p>
+                <div class="intro-highlight mb-3">
+                    Scratch 是一個適合初學者的動畫創作平台，讓學生透過積木式程式輕鬆上手，將天馬行空的點子變成有聲有色的動畫作品。
+                </div>
+                <p>在這裡，每個孩子都是創意的魔法師！透過簡單直覺的操作介面，學生們可以自由發揮想像力，創造出獨一無二的角色、設計生動的動畫效果，並用程式邏輯賦予作品互動性。不論是說故事、表達想法，還是分享生活，Scratch 都能幫助孩子將創意變成精彩的動畫作品。</p>
             </section>
 
             <!-- 教學內容 -->
             <section class="topic-tutorial mb-5">
                 <h2>教學內容</h2>
                 <div class="tutorial-content">
-                    <h3>基礎概念</h3>
-                    <ul>
-                        <li>認識Scratch介面</li>
-                        <li>角色和背景設計</li>
-                        <li>動作和控制</li>
-                        <li>音效和音樂</li>
-                    </ul>
+                    <div class="concept-block basic-concepts">
+                        <h3>基礎概念</h3>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-desktop"></i> 認識 Scratch 介面</li>
+                            <li><i class="fas fa-palette"></i> 角色和背景設計</li>
+                            <li><i class="fas fa-arrows-alt"></i> 動作和控制</li>
+                            <li><i class="fas fa-music"></i> 音效和音樂</li>
+                        </ul>
+                    </div>
 
-                    <h3>進階技巧</h3>
-                    <ul>
-                        <li>角色互動設計</li>
-                        <li>動畫特效製作</li>
-                        <li>故事情節規劃</li>
-                        <li>作品優化與除錯</li>
-                    </ul>
+                    <div class="concept-block advanced-concepts">
+                        <h3>進階技巧</h3>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-users"></i> 角色互動設計</li>
+                            <li><i class="fas fa-magic"></i> 動畫特效製作</li>
+                            <li><i class="fas fa-book"></i> 故事情節規劃</li>
+                            <li><i class="fas fa-tools"></i> 作品優化與除錯</li>
+                        </ul>
+                    </div>
                 </div>
             </section>
 
             <!-- 作品展示 -->
             <section class="work-showcase text-center">
-                <h2>作品展示</h2>
-                <p class="mb-4">查看學生們使用Scratch創作的精彩動畫作品。</p>
-                <a href="work-detail.html?category=scratch-animation" class="btn btn-primary btn-lg">查看作品</a>
+                <p class="mb-4">查看學生們使用 Scratch 創作的精彩動畫作品</p>
+                <a href="work-detail.html?category=scratch-animation" class="btn btn-primary btn-lg view-works-btn">
+                    <i class="fas fa-eye"></i> 查看學生作品
+                </a>
             </section>
         </div>
     </main>

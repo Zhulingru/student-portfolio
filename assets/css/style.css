@@ -227,92 +227,129 @@ main.container {
     }
 }
 
-/* 主題介紹樣式 */
-.topic-intro .highlight-text {
-    font-size: 1.25rem;
-    font-weight: 500;
-    color: #2c3e50;
-    line-height: 1.8;
-    margin-bottom: 1.5rem;
-    display: block;
+/* Topic Content Styles */
+.topic-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-/* 教學內容樣式 */
-.tutorial-section {
-    background-color: #f8f9fa;
-    border-radius: 15px;
-    padding: 2rem;
+.topic-title {
+    color: #2c3e50;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
     margin-bottom: 2rem;
 }
 
-.tutorial-section.basic {
-    background-color: #e8f4f8;
+/* Introduction Section */
+.topic-intro {
+    background-color: #f8f9fa;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.tutorial-section.advanced {
-    background-color: #f8f0e8;
+.intro-highlight {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    padding: 1rem;
+    background-color: #e3f2fd;
+    border-left: 4px solid #1976d2;
+    border-radius: 4px;
 }
 
-.tutorial-section h3 {
+/* Tutorial Content */
+.tutorial-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.concept-block {
+    padding: 2rem;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.concept-block:hover {
+    transform: translateY(-5px);
+}
+
+.basic-concepts {
+    background-color: #e8f5e9;
+    border: 1px solid #c8e6c9;
+}
+
+.advanced-concepts {
+    background-color: #fff3e0;
+    border: 1px solid #ffe0b2;
+}
+
+.concept-block h3 {
     color: #2c3e50;
     margin-bottom: 1.5rem;
     font-weight: 600;
 }
 
-.tutorial-section ul {
+.feature-list {
     list-style: none;
-    padding-left: 0;
+    padding: 0;
 }
 
-.tutorial-section li {
+.feature-list li {
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
+    font-size: 1.1rem;
 }
 
-.tutorial-section li span {
-    margin-left: 0.5rem;
+.feature-list li i {
+    margin-right: 10px;
+    color: #1976d2;
+    font-size: 1.2rem;
+    width: 25px;
 }
 
-/* 作品展示區塊樣式 */
+/* Work Showcase Section */
 .work-showcase {
-    background-color: white;
-    border-radius: 20px;
-    padding: 3rem 2rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    background-color: #f5f5f5;
+    padding: 3rem;
+    border-radius: 10px;
     margin-top: 3rem;
 }
 
-.work-showcase h2 {
-    color: #2c3e50;
-    margin-bottom: 2rem;
-}
-
-.work-showcase p {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #666;
-    margin-bottom: 2rem;
-}
-
-/* 按鈕懸停效果 */
-.btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
+.view-works-btn {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
     transition: all 0.3s ease;
+    background-color: #1976d2;
+    border: none;
 }
 
-.btn-primary:hover {
-    background-color: #4da3ff;
-    border-color: #4da3ff;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,123,255,0.2);
+.view-works-btn:hover {
+    background-color: #1565c0;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-.btn-view-works {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 1.1rem;
-    padding: 0.8rem 2rem;
+.view-works-btn i {
+    margin-right: 8px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .topic-title {
+        font-size: 2rem;
+    }
+    
+    .tutorial-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .concept-block {
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+    }
 } 
